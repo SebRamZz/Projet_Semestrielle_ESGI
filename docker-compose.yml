@@ -1,0 +1,11 @@
+services:
+  database:
+    image: postgres:14-alpine
+    ports:
+      - 5434:5434
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=9wf6bM6F4eM7p6VG11Fx9h8ips9Z1e
+      - POSTGRES_USER=auto-ecole
+      - POSTGRES_DB=AET

@@ -16,13 +16,8 @@ class InvoiceType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('date')
             ->add('typePayment')
             ->add('price')
-            ->add('drivingSchool', EntityType::class, [
-                'class' => DrivingSchool::class,
-'choice_label' => 'id',
-            ])
         ;
     }
 

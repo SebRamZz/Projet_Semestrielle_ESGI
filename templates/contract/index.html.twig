@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContractController!{% endblock %}
+
+{% block body %}
+
+
+{{ include('composants/_adminSideBar.html.twig') }}
+
+<section class="ml-64">
+    <table class="table mx-5">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Validity</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contract in contracts %}
+            <tr>
+                <td>{{ contract.name }}</td>
+                <td>{{ contract.description }}</td>
+                <td>{{ contract.price }}</td>
+                <td>{{ contract.validityDate|date('Y-m-d') }}</td>
+                <td>{{ contract.client.name }}</td>
+                <td>
+                    <a href="{{ path('app_invoice_convert', {'id': contract.id, 'clientId': contract.client.id}) }}">convert to invoice</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_contract_new') }}">Create new</a>
+</section>
+{% endblock %}

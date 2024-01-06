@@ -5,7 +5,14 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        '466': '46rem',
+        '32': '8rem'
+      },
+
+    },
+
   },
   plugins: [],
 }

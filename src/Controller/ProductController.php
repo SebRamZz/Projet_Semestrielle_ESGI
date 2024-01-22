@@ -54,27 +54,17 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product, Request $request): Response
+    #[Route('/{slug}', name: 'app_product_show', methods: ['GET'])]
+    public function show(Product $product): Response
     {
-
-        $session = $request->getSession();
-        $schoolSelected = $session->get('driving-school-selected');
-
         return $this->render('product/show.html.twig', [
             'product' => $product,
-            'drivingSchool' => $schoolSelected,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Route('/edit/{slug}', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-
-        $session = $request->getSession();
-        $schoolSelected = $session->get('driving-school-selected'); 
-
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -87,11 +77,11 @@ class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
-            'drivingSchool' => $schoolSelected,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+
+    #[Route('/{slug}', name: 'app_product_delete', methods: ['POST'])]
     #[Security('is_granted("ROLE_BOSS")')]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -100,6 +90,6 @@ class ProductController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_product_index', ['slug' => $product->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }

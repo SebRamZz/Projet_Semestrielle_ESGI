@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -37,6 +38,10 @@ class Product
 
     #[ORM\Column]
     private ?\DateTimeImmutable $validityDate = null;
+
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ['productName'])]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -148,6 +153,18 @@ class Product
     public function setValidityDate(\DateTimeImmutable $validityDate): static
     {
         $this->validityDate = $validityDate;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

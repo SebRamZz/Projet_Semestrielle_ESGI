@@ -27,9 +27,11 @@
                     <td>{{ product.productDescription }}</td>
                     <td>{{ product.productHour }}</td>
                     <td>{{ product.productPrice }}</td>
+                    <td>{{ product.slug }}</td>
                     <td>
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                        <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                        <a href="{{ path('app_product_show', {'slug': product.slug}) }}">show</a>
+                        <a href="{{ path('app_product_edit', {'slug': product.slug}) }}">edit</a>
+
                     </td>
                 </tr>
             {% else %}

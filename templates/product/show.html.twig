@@ -36,7 +36,7 @@
 
         <a href="{{ path('app_product_index') }}">back to list</a>
 
-        <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+        <a href="{{ path('app_product_edit', {'slug': product.slug}) }}">edit</a>
 
         {{ include('product/_delete_form.html.twig') }}
     </section>

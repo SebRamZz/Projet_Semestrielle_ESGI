@@ -6,8 +6,12 @@ use App\Repository\DrivingSchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: DrivingSchoolRepository::class)]
+#[Vich\Uploadable]
 class DrivingSchool
 {
     #[ORM\Id]
@@ -30,11 +34,28 @@ class DrivingSchool
     #[ORM\OneToMany(mappedBy: 'drivingSchool', targetEntity: Contract::class)]
     private Collection $contracts;
 
+    #[Vich\UploadableField(mapping: 'drivingSchoolLogo', fileNameProperty: 'logoName')]
+    #[Assert\Image(
+        maxSize: '500k',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        maxHeight: 500,
+        maxSizeMessage: 'Le logo ne doit pas dépasser 500ko.',
+        mimeTypesMessage: 'Le logo doit être au format JPG ou PNG.',
+        maxHeightMessage: 'Le logo ne doit pas dépasser 500px de hauteur.'
+    )]
+    private ?File $logoFile = null;
+
     #[ORM\OneToMany(mappedBy: 'drivingSchool', targetEntity: Invoice::class)]
     private Collection $invoices;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'drivingSchools')]
     private Collection $users;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $logoName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $logoSize = null;
 
     public function __construct()
     {
@@ -203,6 +224,42 @@ class DrivingSchool
         if ($this->users->removeElement($user)) {
             $user->removeDrivingSchool($this);
         }
+
+        return $this;
+    }
+
+    public function setLogoFile(?File $imageFile = null): void
+    {
+        $this->logoFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    public function setLogoName(?string $imageName): void
+    {
+        $this->logoName = $imageName;
+    }
+
+    public function getLogoName(): ?string
+    {
+        return $this->logoName;
+    }
+
+    public function getLogoSize(): ?int
+    {
+        return $this->logoSize;
+    }
+
+    public function setLogoSize(?int $logoSize): static
+    {
+        $this->logoSize = $logoSize;
 
         return $this;
     }

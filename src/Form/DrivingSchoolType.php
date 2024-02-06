@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class DrivingSchoolType extends AbstractType
 {
@@ -31,7 +32,11 @@ class DrivingSchoolType extends AbstractType
                     'placeholder' => '3244322348765',
                 ],
             ])
-        ;
+            ->add('logoFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

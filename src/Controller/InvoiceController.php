@@ -6,6 +6,7 @@ use App\Entity\DrivingSchool;
 use App\Entity\Invoice;
 use App\Entity\Contract;
 use App\Entity\Client;
+use App\Form\InvoiceStatusType;
 use App\Form\InvoiceType;
 use App\Form\SearchType;
 use App\Model\SearchData;
@@ -53,7 +54,6 @@ class InvoiceController extends AbstractController
         ]);
     }
 
-
     #[Route('/new', name: 'app_invoice_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_BOSS")')]
     public function new(Request $request, EntityManagerInterface $entityManager, MailerService $mailerService, PdfService $pdfService): Response
@@ -92,6 +92,29 @@ class InvoiceController extends AbstractController
             'invoice' => $invoice,
             'drivingSchool' => $schoolSelected,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_invoice_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Invoice $invoice): Response
+    {
+        $session = $request->getSession();
+        $schoolSelected = $session->get('driving-school-selected');
+        $drivingSchool = $entityManager->getRepository(DrivingSchool::class)->findOneById($schoolSelected);
+
+        $form = $this->createForm(InvoiceStatusType::class, $invoice, array('drivingSchool' => $drivingSchool));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_invoice_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('invoice/edit.html.twig', [
+            'invoice' => $invoice,
+            'form' => $form,
+            'drivingSchool' => $schoolSelected,
         ]);
     }
 

@@ -2,8 +2,8 @@ name: app
 
 type: php:8.1
 
-variables:
-    env:
+# variables:
+#     env:
 
 dependencies:
     php:

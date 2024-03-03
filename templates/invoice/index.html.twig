@@ -37,10 +37,12 @@
 						['description', 'Description', true], 
 						['price', 'Prix', true],
 						['typePayment', 'Type de paiment', true],
-						['actions', 'Actions', false] 
+						['statut', 'Statut', true],
+						['actions', 'Actions', false]
 					], 
 					'datas': invoices,
-					'showAction': ['Voir', 'app_invoice_show']
+					'showAction': ['Voir', 'app_invoice_show'],
+					'updateAction': ['Modifier', 'app_invoice_edit'],
 					} 
 				%}
 

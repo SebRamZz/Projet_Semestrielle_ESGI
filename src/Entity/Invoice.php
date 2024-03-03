@@ -50,6 +50,9 @@ class Invoice
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $statut = null;
+
     public function __construct()
     {
         $this->payment = new ArrayCollection();
@@ -171,6 +174,18 @@ class Invoice
     public function setClient(?Client $client): static
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): static
+    {
+        $this->statut = $statut;
 
         return $this;
     }

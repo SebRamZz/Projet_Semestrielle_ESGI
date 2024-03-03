@@ -15,7 +15,7 @@ runtime:
 #       sodium
 #       iconv
 #       ctype
-    pdo_pgsql
+    - pdo_pgsql
 
 relationships:
     database: "database:postgresql"

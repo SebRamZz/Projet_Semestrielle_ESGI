@@ -3,6 +3,13 @@ ZUO Fabian : fanbian222222
 BOILLOT-HENAULT : Dambh45
 
 Fonctionnalité faite par RAMIREZ Sébastien :
+Création back et front de contrats
+Création front facture
+Ajoute pdf 
+Ajoute statistique de l'auto-école (rapport financier)
+Gestion des utilisateurs back 
+Gestion information client
+
 
 
 

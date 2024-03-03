@@ -57,6 +57,9 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $validityDate = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?DrivingSchool $drivingSchool = null;
+
     public function __construct()
     {
         $current_date = new \DateTime();
@@ -167,6 +170,18 @@ class Product
     public function setValidityDate(\DateTimeImmutable $validityDate): static
     {
         $this->validityDate = $validityDate;
+
+        return $this;
+    }
+
+    public function getDrivingSchool(): ?DrivingSchool
+    {
+        return $this->drivingSchool;
+    }
+
+    public function setDrivingSchool(?DrivingSchool $drivingSchool): static
+    {
+        $this->drivingSchool = $drivingSchool;
 
         return $this;
     }

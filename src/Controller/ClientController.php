@@ -47,6 +47,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_BOSS")')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $session = $request->getSession();
@@ -75,6 +76,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function show(Client $client, Request $request, InvoiceRepository $invoiceRepository, ContractRepository $contractRepository): Response
     {
 
@@ -90,6 +92,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function edit(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
 
@@ -113,6 +116,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {

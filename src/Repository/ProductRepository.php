@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,22 +22,26 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function findProductsGreaterThanPrice($price)
+    public function findProductsGreaterThanPrice($price, $drivingSchool)
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.productPrice > :val')
+            ->andWhere('p.drivingSchool = :drivingSchool')
             ->setParameter('val', $price)
+            ->setParameter('drivingSchool', $drivingSchool)
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getResult()
             ;
     }
 
-    public function findProductsLessThanPrice($price)
+    public function findProductsLessThanPrice($price, $drivingSchool)
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.productPrice < :val')
+            ->andWhere('p.drivingSchool = :drivingSchool')
             ->setParameter('val', $price)
+            ->setParameter('drivingSchool', $drivingSchool)
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getResult()
@@ -53,5 +58,21 @@ class ProductRepository extends ServiceEntityRepository
             ->setParameter('drivingSchool', $drivingSchool)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByDrivingSchoolId($drivingSchoolId): array
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.drivingSchool = :drivingSchoolId')
+            ->setParameter('drivingSchoolId', $drivingSchoolId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function queryFindByDrivingSchool($drivingSchool): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.drivingSchool = :drivingSchool')
+            ->setParameter('drivingSchool', $drivingSchool);
     }
 }

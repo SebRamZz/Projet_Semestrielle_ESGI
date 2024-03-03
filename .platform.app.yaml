@@ -8,14 +8,14 @@ type: php:8.3
 dependencies:
     php:
         composer/composer: "^2"
-runtime:
-    extensions:
-      apcu
-      mbstring
-      sodium
-      iconv
-      ctype
-      pdo_pgsql
+# runtime:
+#     extensions:
+#       apcu
+#       mbstring
+#       sodium
+#       iconv
+#       ctype
+#       pdo_pgsql
 
 relationships:
     database: "database:postgresql"

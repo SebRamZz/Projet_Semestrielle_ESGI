@@ -7,6 +7,7 @@ use App\Entity\Contract;
 use App\Entity\DrivingSchool;
 use App\Entity\Product;
 use App\Repository\ClientRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -28,6 +29,9 @@ class ContractType extends AbstractType
             )
             ->add('product', EntityType::class, [
                 'class' => Product::class,
+                'query_builder' => function (ProductRepository $cr) use($drivingSchool): QueryBuilder  {
+                    return $cr->queryFindByDrivingSchool($drivingSchool);
+                },
                 'choice_label' => 'productName',
                 'mapped' => false
             ])

@@ -23,6 +23,7 @@ use App\Repository\ContractRepository;
 class ContractController extends AbstractController
 {
     #[Route('/', name: 'app_contract_index')]
+    #[Security('is_granted("ROLE_BOSS")')]
     public function index(Request $request, ContractRepository $contractRepository): Response
     {
         $session = $request->getSession();
@@ -103,6 +104,7 @@ class ContractController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_contract_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(contract.getDrivingSchool()))')]
     public function show(Request $request, Contract $contract): Response
     {
         $session = $request->getSession();
@@ -115,6 +117,7 @@ class ContractController extends AbstractController
     }
 
     #[Route('/pdf/{id}', name: 'app_contract_pdf_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function showPdf(Request $request, Contract $contract, PdfService $pdfService)
     {
         $session = $request->getSession();
@@ -129,7 +132,7 @@ class ContractController extends AbstractController
     }
 
     #[Route('/new/{idClient}', name: 'app_contract_new_id_client', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function newClient(Request $request, EntityManagerInterface $entityManager, Client $client, MailerService $mailerService, PdfService $pdfService): Response
     {
 

@@ -3,9 +3,13 @@
 {% block title %}Edit Product{% endblock %}
 
 {% block body %}
-    {{ include('composants/header.html.twig') }}
 
-		<section class='dark:bg-dark-mode-secondary ml-64 mt-32 dark:text-primary'>
+
+  {{ include('composants/header.html.twig') }}
+     <section class="ml-64 mt-32">
+        {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'product'} %}
+
+       <section class=' dark:text-primary'>
             <div class='m-8'>
                 <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Modification produit</h1>
             </div>
@@ -16,6 +20,6 @@
                 'backAction': 'app_product_index'
             }
             %}
-            {{ include('product/_delete_form.html.twig') }}
+        </section>
     </section>
 {% endblock %}

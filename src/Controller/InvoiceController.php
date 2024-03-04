@@ -180,6 +180,7 @@ class InvoiceController extends AbstractController
         $invoice->setDescription($contract->getDescription());
         $invoice->setPrice($contract->getPrice());
         $invoice->setDrivingSchool($drivingSchool);
+        $invoice->setStatut('En attente');
         $invoice->setClient($client);
 
         $form = $this->createForm(InvoiceType::class, $invoice, ["drivingSchool" => $drivingSchool]);
@@ -225,7 +226,6 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/pdf/{id}', name: 'app_invoice_pdf_show', methods: ['GET'])]
-    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(invoice.getDrivingSchool()))')]
     public function showPdf(Request $request, Invoice $invoice, PdfService $pdfService)
     {
         $session = $request->getSession();

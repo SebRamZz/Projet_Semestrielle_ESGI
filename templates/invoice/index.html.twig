@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Invoice index
-{% endblock %}
+{% block title %}Facture{% endblock %}
 
 {% block body %}
 	<section class="dark:bg-dark-mode-primary">
@@ -9,7 +8,7 @@
 		<section class="ml-64 mt-32">
  			{% include 'composants/_adminSideBar.html.twig' with {'current_page': 'invoice'} %}
 			<div class='m-6'>
-				<h1 class="text-6xl text-five dark:text-third pb-8 font-light">Facture</h1>
+				<h1 class="text-7xl text-five dark:text-third pb-8 font-light">Facture</h1>
 
 				<div class='flex items-center justify-between'>
 					<div class='text-white flex'>
@@ -23,8 +22,6 @@
 							{% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Chercher par nom, description' } only %}
 						</div>
 
-						<input class='bg-red-primary dark:bg-dark-dark-purple text-white p-2 rounded' type="date">
-						
 						<div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
 							<span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">add</span>
 							<a class='text-white mr-2' href="{{ path('app_invoice_new') }}">Créer nouveau</a>
@@ -43,6 +40,7 @@
 					'datas': invoices,
 					'showAction': ['Voir', 'app_invoice_show'],
 					'updateAction': ['Modifier', 'app_invoice_edit'],
+					'pdfAction' : ['PDF', 'app_invoice_pdf_show']
 					} 
 				%}
 

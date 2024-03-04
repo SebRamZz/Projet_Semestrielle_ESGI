@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}Modification facture{% endblock %}
 
 {% block body %}
     {{ include('composants/header.html.twig') }}
      <section class="ml-64 mt-32">
         {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'invoice'} %}
 
-        <section class=' dark:text-primary'>
-            <div class='m-8'>
-                <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Modification facture</h1>
-            </div>
-            {% include('composants/_customForm.html.twig')
-                with {
-                'form': form,
-                'updateAction': 'Mettre à jour',
-                'backAction': 'app_invoice_index'
-            }
-            %}
+    <section class='dark:bg-dark-mode-secondary ml-64 mt-32 dark:text-primary'>
+        <div class='m-8'>
+            <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Modification facture</h1>
+        </div>
+        {% include('composants/_customForm.html.twig')
+            with {
+            'form': form,
+            'updateAction': 'Mettre à jour',
+            'backAction': 'app_invoice_index'
+        }
+        %}
 
         </section>
     </section>

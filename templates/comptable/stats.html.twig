@@ -3,154 +3,127 @@
 {% block title %}Invoice index{% endblock %}
 
 {% block body %}
-    <h1>Invoice index</h1>
+    <section>
 
-    {{ include('composants/_adminSideBar.html.twig') }}
-    {% include "composants/_imputDate.html.twig" with { form: form} only %}
+        {{ include('composants/header.html.twig') }}
+        <section class="ml-64 mt-32">
+            {% include 'composants/_adminSideBar.html.twig'  with {'current_page': 'comptable'} %}
+            <div class='m-8'>
+                <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Statistique de l'auto-école</h1>
+            </div>
+            <div class="m-8">
+                {% include "composants/_imputDate.html.twig" with { form: form, placeholder: 'Choissisez une date'} only %}
+            </div>
+            <div class='m-8'>
+                <h1 class="text-5xl text-five dark:text-third pb-8 font-light">Facture ({{ invoicesCount }})</h1>
+                <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
+                    <table class="table-auto w-full">
+                        <thead>
+                        <tr class="text-black dark:text-primary text-xl text-bold">
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Type de paiement</th>
+                            <th>Prix</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for invoice in invoices %}
+                            <tr class='text-center dark:text-third leading-10 border-b-2  dark:border-dark-mode-third'>
+                                <td>{{ invoice.name }}</td>
+                                <td>{{ invoice.description }}</td>
+                                <td>{{ invoice.date ? invoice.date|date('d/m/Y') : '' }}</td>
+                                <td>{{ invoice.typePayment }}</td>
+                                <td>{{ invoice.price }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td class="text-xl text-five dark:text-third" colspan="7">Pas de résultat</td>
+                            </tr>
+                        {% endfor %}
+                        <p class="text-2xl text-five dark:text-third pb-8 ps-8 font-light">Prix total gagné par l'auto école {{ invoicesPrices }}€</p>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <section class="ml-64">
-        <h1 class="text-6xl">Invoice {{ invoicesCount }}</h1>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>TypePayment</th>
-                <th>Price</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for invoice in invoices %}
-                <tr>
-                    <td>{{ invoice.id }}</td>
-                    <td>{{ invoice.name }}</td>
-                    <td>{{ invoice.description }}</td>
-                    <td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
-                    <td>{{ invoice.typePayment }}</td>
-                    <td>{{ invoice.price }}</td>
-                    <td>
-                        <a href="{{ path('app_invoice_show', {'id': invoice.id}) }}">show</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="7">no records found</td>
-                </tr>
-            {% endfor %}
-            <p class="text-2xl">Prix total gagné par l'auto école {{ invoicesPrices }}€</p>
-            </tbody>
-        </table>
+        <section class="ml-64 mt-32">
+            <div class='m-8'>
+                <h1 class="text-5xl text-five dark:text-third pb-8 font-light">Contrat ({{ contractsCount }})</h1>
+                <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
+                    <table class="table-auto w-full">
+                        <thead>
+                        <tr class="text-black dark:text-primary text-xl text-bold">
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Prix</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for contract in contracts %}
+                            <tr class='text-center dark:text-third leading-10 border-b-2  dark:border-dark-mode-third'>
+                                <td>{{ contract.name }}</td>
+                                <td>{{ contract.description }}</td>
+                                <td>{{ contract.validityDate ? contract.validityDate|date('d/m/Y') : '' }}</td>
+                                <td>{{ contract.price }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td class="text-xl text-five dark:text-third" colspan="7">Pas de résultat</td>
+                            </tr>
+                        {% endfor %}
+                        <p class="text-2xl text-five dark:text-third pb-8 ps-8 font-light">Prix total de tout les contrats de l'auto école {{ contractsPrices }}€</p>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="ml-64 mt-32">
+            <div class='m-8'>
+                <h1 class="text-5xl text-five dark:text-third pb-8 font-light">Produit ({{ productCount }})</h1>
+                <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
+                    <table class="table-auto w-full">
+                        <thead>
+                        <tr class="text-black dark:text-primary text-xl text-bold">
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Prix</th>
+                            <th>Nombre de fois vendu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for details in productDetails %}
+                            {% if details is iterable %}
+                                <tr class="text-center dark:text-third leading-10 border-b-2  dark:border-dark-mode-third">
+                                    <td>{{ details.productName }}</td>
+                                    <td>{{ details.productDescription }}</td>
+                                    <td>{{ details.productPrice }}</td>
+                                    <td>{{ details.productCount }}</td>
+                                </tr>
+                            {% else %}
+                                <tr class="text-center dark:text-third leading-10 border-b-2  dark:border-dark-mode-third">
+                                    <td>{{ details.productName }}</td>
+                                    <td>{{ details.productDescription }}</td>
+                                    <td>{{ details.productPrice }}</td>
+                                    <td>Non applicable</td>
+                                </tr>
+                            {% endif %}
+                        {% else %}
+                            <tr>
+                                <td class="text-xl text-five dark:text-third" colspan="7">Pas de résultat</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </section>
 
-    <section class="ml-64">
-        <h1 class="text-6xl">Contracts {{ contractsCount }}</h1>
-        <table class="table mx-5">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Validity</th>
-                <th>User</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for contract in contracts %}
-                <tr>
-                    <td>{{ contract.name }}</td>
-                    <td>{{ contract.description }}</td>
-                    <td>{{ contract.price }}</td>
-                    <td>{{ contract.validityDate|date('Y-m-d') }}</td>
-                    <td>{{ contract.client.firstname }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endfor %}
-            <p class="text-2xl">Prix total des contrats de l'auto école {{ contractsPrices }}€</p>
-            </tbody>
-        </table>
-    </section>
 
-    <section class="ml-64">
-        <h1 class="text-6xl">Client {{ clientCount }}</h1>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-                <th>N° de voie</th>
-                <th>Adresse</th>
-                <th>Ville</th>
-                <th>Code postal</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for client in clients %}
-                <tr>
-                    <td>{{ client.firstname }}</td>
-                    <td>{{ client.lastname }}</td>
-                    <td>{{ client.email }}</td>
-                    <td>{{ client.phoneNumber }}</td>
-                    <td>{{ client.Number }}</td>
-                    <td>{{ client.address }}</td>
-                    <td>{{ client.city }}</td>
-                    <td>{{ client.zipCode }}</td>
-                    <td>
-                        <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    <section class="ml-64">
-        <h1 class="text-6xl">Produit {{ productCount }}</h1>
-        <table class="table mx-5">
-            <thead>
-            <tr>
-                <th>Nom du produit</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Nombre vendu</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for details in productDetails %}
-                {% if details is iterable %}
-                    <tr>
-                        <td>{{ details.productName }}</td>
-                        <td>{{ details.productDescription }}</td>
-                        <td>{{ details.productPrice }}</td>
-                        <td>{{ details.productCount }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td>{{ details.productName }}</td>
-                        <td>{{ details.productDescription }}</td>
-                        <td>{{ details.productPrice }}</td>
-                        <td>Non applicable</td>
-                    </tr>
-                {% endif %}
-            {% else %}
-                <tr>
-                    <td colspan="4">Aucun enregistrement trouvé</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </section>
 
 {% endblock %}

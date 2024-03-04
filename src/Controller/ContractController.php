@@ -117,7 +117,6 @@ class ContractController extends AbstractController
     }
 
     #[Route('/pdf/{id}', name: 'app_contract_pdf_show', methods: ['GET'])]
-    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function showPdf(Request $request, Contract $contract, PdfService $pdfService)
     {
         $session = $request->getSession();

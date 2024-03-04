@@ -10,7 +10,7 @@
         <section class="ml-64 mt-32">
             {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'client'} %}
             <div class='m-8'>
-                <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Visualisation client</h1>
+                <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Visualisation client</h1>
             </div>
             {% include 'composants/_showElements.html.twig' with {
                 'sections': [
@@ -18,14 +18,6 @@
                         "Information de l'utilisateur",
                         client
                     ],
-                    [
-                        "Contrat de l'utilisateur",
-                        contracts
-                    ],
-                    [
-                        "Facture de l'utilisateur",
-                        invoices
-                    ]
                 ],
                 'elementsToDisplay': [
                     [
@@ -38,22 +30,45 @@
                         ['Ville', 'city'],
                         ['Code Postal', 'zipCode'],
                     ],
-                    [
-                        ['Numéro de contrat', 'id'],
-                        ['Nom', 'name'],
-                        ['Description', 'description'],
-                        ['Prix', 'price'],
-                    ],
-                    [
-                        ['Numéro de facture', 'id'],
-                        ['Nom', 'name'],
-                        ['Description', 'description'],
-                        ['Prix', 'price'],
-                        ['Type de paiement', 'typePayment'],
-                    ]
                 ]
             } %}
+            <div class='m-8'>
+                <h1 class="text-3xl text-five dark:text-third font-light">Contrat du client</h1>
+                {% include 'composants/_table.html.twig' with {'columns': [
+                    ['id', 'Numéro de contrat', true],
+                    ['name', 'Nom', true],
+                    ['description', 'Description', true],
+                    ['validityDate', 'Date de validité', true],
+                    ['price', 'Prix', true],
+                ],
+                    'datas': contracts,
+                    'showAction': ['Voir', 'app_contract_show'],
+                } %}
 
+                <h1 class="text-3xl text-five dark:text-third pt-6 font-light">Facture du client</h1>
+                {% include 'composants/_table.html.twig' with {'columns': [
+                    ['id', 'Numéro de facture', true],
+                    ['name', 'Nom', true],
+                    ['description', 'Description', true],
+                    ['price', 'Prix', true],
+                    ['typePayment', 'Type de paiement', true],
+                ],
+                    'datas': invoices,
+                    'showAction': ['Voir', 'app_invoice_show'],
+                } %}
+
+            </div>
+            <section class="flex m-8 gap-4 self-end">
+                <div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
+                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">arrow_back</span>
+                    <a class="text-white" href="{{ path('app_client_index') }}">Retour à la liste</a>
+                </div>
+
+                <div class="flex gap-4 bg-orange-primary hover:bg-orange-secondary p-2 rounded items-center justify-between">
+                    <a href="{{ path('app_client_edit', {'id': client.id })}}" type="submit" class='text-white'>Modifier</a>
+                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white transition duration-75">edit_square</span>
+                </div>
+            </section>
         </section>
     </section>
 {% endblock %}

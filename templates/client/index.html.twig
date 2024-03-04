@@ -1,33 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Client index
-{% endblock %}
+{% block title %}Client{% endblock %}
 
 {% block body %}
-
-	{# {% include "composants/_searchData.html.twig" with { form: form} only %} #}
-
 	<section>
 		{{ include('composants/header.html.twig') }}
 		<section class="ml-64 mt-32">
 			 {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'client'} %}
 			<div class='m-6'>
-				<h1 class="text-6xl text-five dark:text-third pb-8 font-light">Client</h1>
+				<h1 class="text-7xl text-five dark:text-third pb-8 font-light">Client</h1>
 				<div class='flex items-center justify-between'>
 					<div class='text-white flex'>
-{#						<button class='bg-red-primary px-6 py-2 rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100'>All</button>#}
-{#						<button class='bg-red-primary px-6 py-2 hover:bg-opacity-80 transition ease-in-out duration-100'>Lorem</button>#}
-{#						<button class='bg-red-primary px-6 py-2 rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100'>Lorem</button>#}
+						<a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index') }}">Pas de filtre</a>
+						<a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index', {'orderASC': '1'}) }}"> A à Z </a>
+						<a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index', {'orderASC': '2'}) }}"> Z à A </a>
 					</div>
 					<div class='flex items-center gap-6'>
+
 						<div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
 							<div class='flex items-center rounded'>
 								{% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Chercher par nom, prénom' } only %}
 							</div>
 						</div>
 
-						<input class='bg-red-primary dark:bg-dark-dark-purple text-white p-2 rounded' type="date">
-						
 						<div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
 							<span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">add</span>
 							<a class='text-white mr-2' href="{{ path('app_client_new') }}">Créer nouveau</a>
@@ -48,7 +43,6 @@
                 	'deleteAction': ['Supprimer', 'app_client_delete']
 					}
 				%}
-
 			</div>
 		</section>
 	</section>

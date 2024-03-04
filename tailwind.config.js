@@ -19,6 +19,10 @@ module.exports = {
         'green-primary': '#16a34a',
         'green-secondary': '#22c55e',
 
+        'sky-primary': '#0ea5e9',
+
+        'pink-primary': '#f472b6',
+
         'black': '#000',
 
 

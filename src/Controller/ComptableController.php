@@ -40,7 +40,6 @@ class ComptableController extends AbstractController
             $contractsPrices = $contractRepository->findTotalPriceOfContractsCreatedAfterDate($date->date);
 
             $clients = $clientRepository->findClientCreatedAfterDate($date->date);
-                dump($productDetails);
 
             return $this->render('comptable/stats.html.twig', [
                 'form' => $form->createView(),
@@ -54,7 +53,7 @@ class ComptableController extends AbstractController
 
                 'contracts' => $contracts,
                 'contractsCount' => count($contracts),
-                'contractsPrices' =>$contractsPrices,
+                'contractsPrices' => $contractsPrices,
 
                 'clients' => $clients,
                 'clientCount' => count($clients),
@@ -64,19 +63,19 @@ class ComptableController extends AbstractController
         return $this->render('comptable/stats.html.twig', [
             'form' => $form->createView(),
 
-            'invoices' => $invoiceRepository->findAll(),
-            'invoicesCount' => count($invoiceRepository->findAll()),
+            'invoices' => $invoiceRepository->findByDrivingSchoolId($schoolSelected),
+            'invoicesCount' => count($invoiceRepository->findByDrivingSchoolId($schoolSelected)),
             'invoicesPrices' => $invoiceRepository->getTotalPriceOfAllInvoices(),
 
-            'productCount' => count($productRepository->findAll()),
-            'productDetails' => $productRepository->findAll(),
+            'productCount' => count($productRepository->findByDrivingSchoolId($schoolSelected)),
+            'productDetails' => $productRepository->findByDrivingSchoolId($schoolSelected),
 
-            'contracts' => $contractRepository->findAll(),
-            'contractsCount' => count($contractRepository->findAll()),
+            'contracts' => $contractRepository->findByDrivingSchool($schoolSelected),
+            'contractsCount' => count($contractRepository->findByDrivingSchool($schoolSelected)),
             'contractsPrices' => $contractRepository->getTotalPriceOfAllContracts(),
 
-            'clients' => $clientRepository->findAll(),
-            'clientCount' => count($clientRepository->findAll()),
+            'clients' => $clientRepository->findByDrivingSchool($schoolSelected),
+            'clientCount' => count($clientRepository->findByDrivingSchool($schoolSelected)),
 
             'drivingSchool' => $schoolSelected,
         ]);

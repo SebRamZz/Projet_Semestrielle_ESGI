@@ -92,11 +92,13 @@ class InvoiceRepository extends ServiceEntityRepository
         return $result !== null ? (float)$result : 0.0;
     }
 
-    public function findByTypePayment(string $typePayment): array
+    public function findByTypePayment(string $typePayment, $drivingSchool): array
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.typePayment = :typePayment')
+            ->andWhere('i.drivingSchool = :drivingSchool')
             ->setParameter('typePayment', $typePayment)
+            ->setParameter('drivingSchool', $drivingSchool)
             ->getQuery()
             ->getResult();
     }

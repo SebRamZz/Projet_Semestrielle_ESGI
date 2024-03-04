@@ -10,10 +10,10 @@
         <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center py-16">
             <!--Left Col-->
             <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-                <h1 class="mt-14 text-black dark:text-gray-200 mb-4 text-5xl font-bold leading-tight">
+                <h1 class="mt-14 text-white dark:text-gray-200 mb-4 text-5xl font-bold leading-tight">
                     Gere ton auto-école automatiquement
                 </h1>
-                <p class="leading-normal text-black dark:text-gray-200 text-2xl mb-8">
+                <p class="leading-normal text-white dark:text-gray-200 text-2xl mb-8">
                     Ajoute de nouveaux client et gere tes contrats et facture comme bon te semble !
                 </p>
                 <button class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
@@ -28,7 +28,7 @@
     </div>
     </div>
 
-    <section class="bg-white dark:bg-gray-900 border-b py-8">
+    <section class="bg-white dark:bg-dark-mode-third border-b py-8">
         <div class="container max-w-5xl mx-auto m-8">
             <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-black dark:text-gray-200">
                 Nos Services
@@ -38,14 +38,10 @@
             </div>
             <div class="flex flex-wrap">
                 <div class="w-5/6 sm:w-1/2 p-6">
-                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3 text-black dark:text-gray-200">
-                        Lorem ipsum dolor sit amet
-                    </h3>
                     <p class="text-gray-600 mb-8 text-black dark:text-gray-200">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+                        Que vous dirigiez une petite auto-école locale ou une entreprise de formation à grande échelle,
+                        la gestion efficace de vos clients, factures et contrats est essentielle pour assurer le bon
+                        fonctionnement de votre entreprise. C'est là que notre application entre en jeu.
                     </p>
                 </div>
                 <div class="w-full sm:w-1/2 p-6">
@@ -54,56 +50,68 @@
             </div>
             <div class="flex flex-wrap">
                 <div class="w-full sm:w-1/2 p-6">
-                    <img class="w-4/6 h-1/2 sm:h-64 mx-auto" src="images/driving-test.png" alt="">
+                    <img class="w-4/6 h-1/2 sm:h-64 mx-auto" src="images/driving-school.png" alt="">
                 </div>
                 <div class="w-5/6 sm:w-1/2 p-6">
                     <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3 text-black dark:text-gray-200">
-                        Lorem ipsum dolor sit amet
+                        Simplifiez la gestion de votre auto-école
                     </h3>
                     <p class="text-gray-600 mb-8 text-black dark:text-gray-200">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+                        Notre application de gestion spécialement conçue pour les auto-écoles vous permet de centraliser
+                        vos factures, contrats, clients, produits ainsi qu'un rapport financier de votre auto-école.
                     </p>
                 </div>
             </div>
+            <div class="flex flex-wrap">
+                <div class="w-5/6 sm:w-1/2 p-6">
+                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3 text-black dark:text-gray-200">
+                        Contrats / Factures simplifiée
+                    </h3>
+                    <p class="text-gray-600 mb-8 text-black dark:text-gray-200">
+                        Ne perdez plus de temps à créer des contrats/factures manuellement. Notre application vous
+                        permet de générer et de gérer facilement des contrats ainsi que des factures pour vos clients,
+                        avec notre service de mailling vos factures seront envoyés automatiquement à vos clients.
+                    </p>
+                </div>
+                <div class="w-full sm:w-1/2 p-6">
+                    <img class="w-4/6 h-1/2 sm:h-64 mx-auto" src="images/driving-test.png" alt="">
+                </div>
+            </div>
     </section>
-    <section class="bg-white dark:bg-gray-900 py-6">
+    <section class="bg-white dark:bg-dark-mode-third py-6">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
             <div class="max-w-screen-md mb-8 lg:mb-16">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Nos produits, ce que nous vous offrons</h2>
-                <p class="text-gray-500 sm:text-xl dark:text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula</p>
             </div>
             <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                 <div>
-                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'request_quote', titre: 'Facture', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula'} %}
+                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'request_quote', titre: 'Facture', description: "Créez simplement vos factures, nous nous occupons de créer une version PDF de votre facture et de l'envoyer automatiquement à vos client"} %}
                     {% endembed %}
                 </div>
                 <div>
-                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'contract', titre: 'Contrat', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula'} %}
+                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'contract', titre: 'Contrat', description: "Créez simplement vos contrats, nous nous occupons de créer une version PDF de votre facture et de l'envoyer automatiquement à vos client"} %}
                     {% endembed %}
                 </div>
                 <div>
-                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'group', titre: 'Client', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula'} %}
+                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'group', titre: 'Client', description: "Nous vous proposont un gestion simplifiée de vos clients"} %}
                     {% endembed %}
                 </div>
                 <div>
-                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'monetization_on', titre: 'Finance', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula'} %}
+                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'monetization_on', titre: 'Finance', description: "Vous voulez savoir où vous en êtes financièrement ? Nous avons pour cela un menu qui vous propose votre rapport financier"} %}
                     {% endembed %}
                 </div>
                 <div>
-                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'bolt', titre: 'Rapidité', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula'} %}
-                    {% endembed %}
-                </div>
-                <div>
-                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'payments', titre: 'Opération', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula'} %}
+                    {% embed 'composants/_iconAndText.html.twig' with {nameIcons: 'bolt', titre: 'Rapidité', description: "Notre application est complète, vous simplifie la vie tout en étant performant"} %}
                     {% endembed %}
                 </div>
             </div>
+            <div class="max-w-screen-md mt-8 lg:mb-8">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Vous êtes intéréssés par nos service ?</h2>
+                <p class="text-gray-500 sm:text-xl dark:text-gray-400">Alors n'hésitez plus, rejoignez nous dans l'espace Abonnement !</p>
+            </div>
         </div>
     </section>
-    <section class="bg-gray-100 dark:bg-gray-950 py-8">
+    <section class="bg-gray-100 dark:bg-dark-mode-primary">
         <div class="container  mx-auto px-2 pt-4 pb-12 text-gray-800">
             <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800 dark:text-white">
                 Abonnement
@@ -113,19 +121,19 @@
             </div>
             <div class="flex flex-col sm:flex-row justify-center pt-12 my-12 sm:my-4">
                 <div class="flex flex-col w-5/6 lg:w-1/4 mx-auto lg:mx-0 rounded-none lg:rounded-l-lg bg-white mt-4">
-                    <div class="flex-1 bg-white dark:bg-gray-900 text-gray-600 dark:text-white rounded-t rounded-b-none overflow-hidden shadow">
+                    <div class="flex-1 bg-white dark:bg-dark-mode-third text-gray-600 dark:text-white rounded-t rounded-b-none overflow-hidden shadow">
                         <div class="p-8 text-3xl font-bold text-center border-b-4">
                             Gratuit
                         </div>
                         <ul class="w-full text-center text-sm">
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
+                            <li class="border-b py-4">Gestion Client</li>
+                            <li class="border-b py-4">Gestion Factures / Contrat</li>
+                            <li class="border-b py-4">Gestion de vos produits</li>
                         </ul>
                     </div>
-                    <div class="flex-none mt-auto bg-white dark:bg-gray-900 rounded-b rounded-t-none overflow-hidden shadow p-6">
+                    <div class="flex-none mt-auto bg-white dark:bg-dark-mode-third rounded-b rounded-t-none overflow-hidden shadow p-6">
                         <div class="w-full pt-6 text-3xl text-gray-600 dark:text-white font-bold text-center">
-                            jsp€
+                            0€
                             <span class="text-base"> / par mois</span>
                         </div>
                         <div class="flex items-center justify-center">
@@ -136,17 +144,18 @@
                     </div>
                 </div>
                 <div class="flex flex-col w-5/6 lg:w-1/3 mx-auto lg:mx-0 dark:text-white rounded-lg bg-white mt-4 sm:-mt-6 shadow-lg z-10">
-                    <div class="flex-1 bg-white dark:bg-gray-900 rounded-t rounded-b-none overflow-hidden shadow">
+                    <div class="flex-1 bg-white dark:bg-dark-mode-third rounded-t rounded-b-none overflow-hidden shadow">
                         <div class="w-full p-8 text-3xl font-bold text-center">Basique</div>
                         <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div>
                         <ul class="w-full text-center text-base font-bold">
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
+                            <li class="border-b py-4">Gestion Client</li>
+                            <li class="border-b py-4">Gestion Factures / Contrat</li>
+                            <li class="border-b py-4">Gestion de vos produits</li>
+                            <li class="border-b py-4">System d'envoi automatique
+                                de facture/contrat au client</li>
                         </ul>
                     </div>
-                    <div class="flex-none mt-auto bg-white dark:text-white dark:bg-gray-900 rounded-b rounded-t-none overflow-hidden shadow p-6">
+                    <div class="flex-none mt-auto bg-white dark:text-white dark:bg-dark-mode-third rounded-b rounded-t-none overflow-hidden shadow p-6">
                         <div class="w-full pt-6 text-4xl font-bold text-center">
                             900€
                             <span class="text-base"> / par mois</span>
@@ -159,17 +168,20 @@
                     </div>
                 </div>
                 <div class="flex flex-col w-5/6 lg:w-1/4 mx-auto lg:mx-0 rounded-none lg:rounded-l-lg bg-white mt-4">
-                    <div class="flex-1 bg-white dark:bg-gray-900 text-gray-600 dark:text-white rounded-t rounded-b-none overflow-hidden shadow ">
+                    <div class="flex-1 bg-white dark:bg-dark-mode-third text-gray-600 dark:text-white rounded-t rounded-b-none overflow-hidden shadow ">
                         <div class="p-8 text-3xl font-bold text-center border-b-4">
                             Professionnel
                         </div>
                         <ul class="w-full text-center text-sm">
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
-                            <li class="border-b py-4">Lorem ipsum</li>
+                            <li class="border-b py-4">Gestion Client</li>
+                            <li class="border-b py-4">Gestion Factures / Contrat</li>
+                            <li class="border-b py-4">Gestion de vos produits</li>
+                            <li class="border-b py-4">System d'envoi automatique
+                                de facture/contrat au client</li>
+                            <li class="border-b py-4">Rapports financiers</li>
                         </ul>
                     </div>
-                    <div class="flex-none mt-auto dark:bg-gray-900 bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
+                    <div class="flex-none mt-auto dark:bg-dark-mode-third bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
                         <div class="w-full pt-6 text-3xl text-gray-600 dark:text-white font-bold text-center">
                             1200€
                             <span class="text-base"> / par mois</span>
@@ -185,12 +197,12 @@
         </div>
     </section>
     <!--Footer-->
-    <footer class="bg-white dark:bg-gray-900">
+    <footer class="bg-white dark:bg-dark-mode-third">
         <div class="container mx-auto px-8">
             <div class="w-full flex flex-col md:flex-row py-6">
                 <div class="flex-1 mb-6 text-black dark:text-white">
-                    <span class="material-symbols-outlined w-6 h-6 text-primary-600 lg:w-10 lg:h-10 dark:text-violet-900">directions_car</span>
-                    <a class="text-orange-600 dark:text-violet-900 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
+                    <span class="material-symbols-outlined w-6 h-6 text-primary-600 lg:w-10 lg:h-10 dark:text-dark-light-purple">directions_car</span>
+                    <a class="text-orange-600 dark:text-dark-light-purple no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
                         A-E Tech
                     </a>
                 </div>

@@ -94,12 +94,16 @@ class DrivingSchool
     #[Assert\Positive]
     private ?int $zipCode = null;
 
+    #[ORM\OneToMany(mappedBy: 'drivingSchool', targetEntity: Product::class)]
+    private Collection $products;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
         $this->contracts = new ArrayCollection();
         $this->invoices = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -297,6 +301,36 @@ class DrivingSchool
     public function setZipCode(int $zipCode): static
     {
         $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): static
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setDrivingSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): static
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getDrivingSchool() === $this) {
+                $product->setDrivingSchool(null);
+            }
+        }
 
         return $this;
     }

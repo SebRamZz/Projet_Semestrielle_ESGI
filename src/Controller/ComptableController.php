@@ -18,7 +18,7 @@ class ComptableController extends AbstractController
 {
 
     #[Route('/', name: 'app_comptable_index', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Security('is_granted("ROLE_COMPTABLE")')]
     public function index(InvoiceRepository $invoiceRepository, ProductRepository $productRepository, Request $request, ClientRepository $clientRepository, ContractRepository $contractRepository): Response
     {
         $session = $request->getSession();

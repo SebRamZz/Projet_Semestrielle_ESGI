@@ -38,7 +38,7 @@ class DrivingSchoolType extends AbstractType
             ->add('address', TextType::class, [
                 'label' => 'Adresse de  l\'auto-école',
                 'attr' => [
-                    'placeholder' => '34 Rue des adrien',
+                    'placeholder' => 'Rue des adrien',
                 ],
             ])
 
@@ -52,7 +52,7 @@ class DrivingSchoolType extends AbstractType
             ->add('city', TextType::class, [
                 'label' => 'Ville',
                 'attr' => [
-                    'placeholder' => 'Paris 13'
+                    'placeholder' => 'Paris'
                 ]
             ])
         ;

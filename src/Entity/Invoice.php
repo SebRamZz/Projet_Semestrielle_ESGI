@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,11 +16,9 @@ class Invoice
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotNull(message: "Ce champ ne peut pas être vide.")]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner une description')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -39,9 +35,6 @@ class Invoice
     )]
     private ?int $price = null;
 
-    #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: Payment::class)]
-    private Collection $payment;
-
     #[ORM\ManyToOne(inversedBy: 'invoices')]
     #[ORM\JoinColumn(nullable: false)]
     private ?DrivingSchool $drivingSchool = null;
@@ -51,12 +44,12 @@ class Invoice
     private ?Client $client = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $statut = null;
+    private ?string $status = null;
 
     public function __construct()
     {
-        $this->payment = new ArrayCollection();
         $this->date = new \DateTime();
+        $this->status = 'En attente';
     }
 
     public function getId(): ?int
@@ -124,36 +117,6 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return Collection<int, Payment>
-     */
-    public function getPayment(): Collection
-    {
-        return $this->payment;
-    }
-
-    public function addPayment(Payment $payment): static
-    {
-        if (!$this->payment->contains($payment)) {
-            $this->payment->add($payment);
-            $payment->setInvoice($this);
-        }
-
-        return $this;
-    }
-
-    public function removePayment(Payment $payment): static
-    {
-        if ($this->payment->removeElement($payment)) {
-            // set the owning side to null (unless already changed)
-            if ($payment->getInvoice() === $this) {
-                $payment->setInvoice(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDrivingSchool(): ?DrivingSchool
     {
         return $this->drivingSchool;
@@ -178,14 +141,14 @@ class Invoice
         return $this;
     }
 
-    public function getStatut(): ?string
+    public function getStatus(): ?string
     {
-        return $this->statut;
+        return $this->status;
     }
 
-    public function setStatut(string $statut): static
+    public function setStatus(?string $status): static
     {
-        $this->statut = $statut;
+        $this->status = $status;
 
         return $this;
     }

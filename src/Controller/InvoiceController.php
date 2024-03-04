@@ -67,6 +67,11 @@ class InvoiceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $productSelected = $form->get('product')->getData();
+
+            $invoice->setName($productSelected->getProductName());
+            $invoice->setPrice($productSelected->getProductPrice());
+            $invoice->setDescription($productSelected->getProductDescription());
             $invoice->setDrivingSchool($drivingSchool);
             $invoice->setDate(new DateTimeImmutable());
 
@@ -102,7 +107,7 @@ class InvoiceController extends AbstractController
         $schoolSelected = $session->get('driving-school-selected');
         $drivingSchool = $entityManager->getRepository(DrivingSchool::class)->findOneById($schoolSelected);
 
-        $form = $this->createForm(InvoiceStatusType::class, $invoice, array('drivingSchool' => $drivingSchool));
+        $form = $this->createForm(InvoiceStatusType::class, $invoice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

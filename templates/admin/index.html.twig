@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+
+    {{ include('composants/_adminSideBar.html.twig') }}
+    <h1>User index</h1>
+
+    <section class="ml-64">
+        <table class="table mx-5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>firstname</th>
+                <th>lastname</th>
+                <th>email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_user_new') }}" class="mx-5">Create new</a>
+    </section>
+
+{% endblock %}

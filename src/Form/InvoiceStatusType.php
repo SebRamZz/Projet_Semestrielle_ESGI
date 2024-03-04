@@ -13,11 +13,10 @@ class InvoiceStatusType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $drivingSchool = $options['drivingSchool'];
         $builder
-            ->add('statut', ChoiceType::class, [
+            ->add('status', ChoiceType::class, [
                 'attr' => [
-                    'placeholder' => 'Choississez statut'
+                    'placeholder' => 'Choississez status'
                 ],
                 'choices' => [
                     'En attente' => 'En attente',
@@ -30,10 +29,5 @@ class InvoiceStatusType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired('drivingSchool');
-        $resolver->setAllowedTypes('drivingSchool', DrivingSchool::class);
-        $resolver->setDefaults([
-            'data_class' => Invoice::class,
-        ]);
     }
 }

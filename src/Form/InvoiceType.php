@@ -5,15 +5,15 @@ namespace App\Form;
 use App\Entity\Client;
 use App\Entity\DrivingSchool;
 use App\Entity\Invoice;
+use App\Entity\Product;
 use App\Repository\ClientRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class InvoiceType extends AbstractType
 {
@@ -21,26 +21,29 @@ class InvoiceType extends AbstractType
     {
         $drivingSchool = $options['drivingSchool'];
         $builder
-            ->add('name')
-            ->add('description')
             ->add('typePayment', ChoiceType::class, [
                 'attr' => [
                     'placeholder' => 'Choisissez le type de payment'
                 ],
                 'choices' => [
-                    'Cart' => 'Carte',
-                    'Cheque' => 'Chèque',
-                    'Cash' => 'Espèce',
+                    'Carte' => 'Cart',
+                    'Chèque' => 'Cheque',
+                    'Espèce' => 'Cash',
                 ],
                 'multiple' => false,
             ])
-            ->add('price')
             ->add('client', EntityType::class, [
                     'class' => Client::class,
                     'query_builder' => function (ClientRepository $cr) use ($drivingSchool): QueryBuilder {
                         return $cr->queryFindByDrivingSchool($drivingSchool);
-                    },
-                    'choice_label' => 'firstname']
+                }]
+            )
+            ->add('product', EntityType::class, [
+                'mapped' => false,
+                'class' => Product::class,
+                'query_builder' => function (ProductRepository $cr) use ($drivingSchool): QueryBuilder {
+                    return $cr->queryFindByDrivingSchool($drivingSchool);
+                }]
             );
     }
 

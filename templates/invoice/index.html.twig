@@ -14,9 +14,9 @@
 				<div class='flex items-center justify-between'>
 					<div class='text-white flex'>
 						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index') }}">Réinitialisation filtre</a>
-						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index', {'typePayment': 'Espèce'}) }}">Espèce</a>
-						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index', {'typePayment': 'Carte'}) }}">Carte</a>
-						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index', {'typePayment': 'Chèque'}) }}">Chèque</a>
+						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index', {'typePayment': 'Cash'}) }}">Espèce</a>
+						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index', {'typePayment': 'Cart'}) }}">Carte</a>
+						<a class='bg-red-primary dark:bg-dark-dark-purple border border-black dark:border-primary px-6 py-2 rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_invoice_index', {'typePayment': 'Cheque'}) }}">Chèque</a>
 					</div>
 					<div class='flex items-center gap-6'>
 						<div class='flex items-center rounded'>
@@ -37,7 +37,7 @@
 						['description', 'Description', true], 
 						['price', 'Prix', true],
 						['typePayment', 'Type de paiment', true],
-						['statut', 'Statut', true],
+						['status', 'status', true],
 						['actions', 'Actions', false]
 					], 
 					'datas': invoices,

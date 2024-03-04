@@ -1,43 +1,52 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
 {% block title %}Hello ContractController!{% endblock %}
 
 {% block body %}
 
+<section class="dark:bg-dark-mode-primary">
+    {{ include('composants/header.html.twig') }}
+    <section class="ml-64 mt-32">
+        {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'contract'} %}
+        <div class='m-6'>
+        <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Contrat</h1>
 
-{{ include('composants/_adminSideBar.html.twig') }}
+            <div class='flex items-center justify-between'>
+                <div class='text-white flex '>
+                    <a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index') }}">Tout</a>
+                    <a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index', {'contractFiltredLess': '700'}) }}"> > 700 € </a>
+                    <a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index', {'contractFiltredGreater': '700'}) }}"> < 700 € </a>
+                </div>
+                <div class='flex items-center gap-6'>
+                    <div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
+                        <div class='flex items-center rounded'>
+                            {% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Rechercher par nom, description' } only %}
+                        </div>
+                    </div>
 
-<section class="ml-64">
-    <table class="table mx-5">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Validity</th>
-                <th>User</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for contract in contracts %}
-            <tr>
-                <td>{{ contract.name }}</td>
-                <td>{{ contract.description }}</td>
-                <td>{{ contract.price }}</td>
-                <td>{{ contract.validityDate|date('Y-m-d') }}</td>
-                <td>{{ contract.client.firstname }}</td>
-                <td>
-                    <a href="{{ path('app_contract_show', {'id': contract.id}) }}">show</a>
-                    <a href="{{ path('app_invoice_convert', {'id': contract.id, 'clientId': contract.client.id}) }}">convert to invoice</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ path('app_contract_new') }}">Create new</a>
+                    <input class='bg-red-primary dark:bg-dark-dark-purple text-white p-2 rounded' type="date">
+
+                    <div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
+                        <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">add</span>
+                        <a class='text-white mr-2' href="{{ path('app_contract_new') }}">Créer nouveau</a>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'composants/_table.html.twig' with {'columns': [
+                    ['name', 'Nom', true],
+                    ['description', 'Description', true],
+                    ['price', 'Prix', true],
+                    ['validityDate', 'Date de validité', true],
+                    ['actions', 'Actions', false]
+                ],
+                'datas': contracts,
+                    'showAction': ['Voir', 'app_contract_show'],
+                }
+            %}
+
+        </div>
+    </section>
 </section>
+
 {% endblock %}

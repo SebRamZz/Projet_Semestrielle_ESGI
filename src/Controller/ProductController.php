@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DrivingSchool;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
@@ -19,12 +20,21 @@ class ProductController extends AbstractController
     #[Security('is_granted("ROLE_BOSS")')]
     public function index(ProductRepository $productRepository, Request $request): Response
     {
-
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
 
+        $productFiltredLess = $request->query->get('productFiltredLess');
+        $productFiltredGreater = $request->query->get('productFiltredGreater');
+        if ($productFiltredLess) {
+            $products = $productRepository->findProductsLessThanPrice($productFiltredLess, $schoolSelected);
+        } elseif ($productFiltredGreater) {
+            $products = $productRepository->findProductsGreaterThanPrice($productFiltredGreater, $schoolSelected);
+        } else {
+            $products = $productRepository->findByDrivingSchoolId($schoolSelected);
+        }
+
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
             'drivingSchool' => $schoolSelected,
         ]);
     }
@@ -42,6 +52,8 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $drivingSchool = $entityManager->getRepository(DrivingSchool::class)->findOneById($schoolSelected);
+            $product->setDrivingSchool($drivingSchool);
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -55,6 +67,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") || (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(product.getDrivingSchool()))')]
     public function show(Product $product, Request $request): Response
     {
 
@@ -68,10 +81,9 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Security('is_granted("ROLE_ADMIN") || (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(product.getDrivingSchool()))')]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected'); 
 
@@ -91,11 +103,12 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST'])]
+    #[Security('is_granted("ROLE_ADMIN") || (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(product.getDrivingSchool()))')]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+    {   
+        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->getPayload()->get('_token'))) {
+            dd('hello');
             $entityManager->remove($product);
             $entityManager->flush();
         }

@@ -5,50 +5,51 @@
 
 {% block body %}
 
-	{% include "composants/_searchData.html.twig" with { form: form} only %}
-	{{ include('composants/_adminSideBar.html.twig') }}
+	{# {% include "composants/_searchData.html.twig" with { form: form} only %} #}
 
-	<section class="ml-64">
-		<h1>Client index</h1>
+	<section>
+		{{ include('composants/header.html.twig') }}
+		<section class="ml-64 mt-32">
+			 {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'client'} %}
+			<div class='m-6'>
+				<h1 class="text-6xl text-five dark:text-third pb-8 font-light">Client</h1>
+				<div class='flex items-center justify-between'>
+					<div class='text-white flex'>
+{#						<button class='bg-red-primary px-6 py-2 rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100'>All</button>#}
+{#						<button class='bg-red-primary px-6 py-2 hover:bg-opacity-80 transition ease-in-out duration-100'>Lorem</button>#}
+{#						<button class='bg-red-primary px-6 py-2 rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100'>Lorem</button>#}
+					</div>
+					<div class='flex items-center gap-6'>
+						<div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
+							<div class='flex items-center rounded'>
+								{% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Chercher par nom, prénom' } only %}
+							</div>
+						</div>
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Lastname</th>
-					<th>Email</th>
-					<th>Téléphone</th>
-					<th>N° de voie</th>
-					<th>Adresse</th>
-					<th>Ville</th>
-					<th>Code postal</th>
-					<th>actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for client in clients %}
-					<tr>
-						<td>{{ client.firstname }}</td>
-						<td>{{ client.lastname }}</td>
-						<td>{{ client.email }}</td>
-						<td>{{ client.phoneNumber }}</td>
-						<td>{{ client.Number }}</td>
-						<td>{{ client.address }}</td>
-						<td>{{ client.city }}</td>
-						<td>{{ client.zipCode }}</td>
-						<td>
-							<a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
-							<a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="5">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+						<input class='bg-red-primary dark:bg-dark-dark-purple text-white p-2 rounded' type="date">
+						
+						<div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
+							<span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">add</span>
+							<a class='text-white mr-2' href="{{ path('app_client_new') }}">Créer nouveau</a>
+						</div>
+					</div>
+				</div>
 
-		<a href="{{ path('app_client_new') }}">Create new</a>
+				{% include 'composants/_table.html.twig' with {'columns': [
+						['firstname', 'Prénom', true],
+						['lastname', 'Nom', true],
+						['email', 'Email', true], 
+						['phoneNumber', 'Téléphone', true],
+						['actions', 'Actions', false] 
+					], 
+					'datas': clients,
+					'showAction': ['Voir', 'app_client_show'],
+					'updateAction': ['Modifier', 'app_client_edit'],
+                	'deleteAction': ['Supprimer', 'app_client_delete']
+					}
+				%}
+
+			</div>
+		</section>
 	</section>
 {% endblock %}

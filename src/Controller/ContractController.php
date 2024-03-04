@@ -7,6 +7,8 @@ use App\Entity\Contract;
 use App\Entity\DrivingSchool;
 use App\Form\ContractType;
 
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Service\PdfService;
 use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,12 +23,34 @@ use App\Repository\ContractRepository;
 class ContractController extends AbstractController
 {
     #[Route('/', name: 'app_contract_index')]
+    #[Security('is_granted("ROLE_BOSS")')]
     public function index(Request $request, ContractRepository $contractRepository): Response
     {
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
+
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+
+        $contractFiltredLess = $request->query->get('contractFiltredLess');
+        $contractFiltredGreater = $request->query->get('contractFiltredGreater');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchData->page = $request->query->getInt('page', 1);
+            $contracts = $contractRepository->findByContractNameAndDescription($searchData->q, $schoolSelected);
+
+        } elseif ($contractFiltredLess) {
+            $contracts = $contractRepository->findContractLessThanPrice($contractFiltredLess, $schoolSelected);
+        } elseif ($contractFiltredGreater) {
+            $contracts = $contractRepository->findContractGreaterThanPrice($contractFiltredGreater, $schoolSelected);
+        } else {
+            $contracts = $contractRepository->findByDrivingSchool($schoolSelected);
+        }
+
         return $this->render('contract/index.html.twig', [
-            'contracts' => $contractRepository->findByDrivingSchool($schoolSelected),
+            'form' => $form->createView(),
+            'contracts' => $contracts,
             'drivingSchool' => $schoolSelected,
         ]);
     }
@@ -62,10 +86,12 @@ class ContractController extends AbstractController
                 'contract' => $contract,
             ]);
 
-            $nomContrat = $this->getParameter('kernel.project_dir') .'/public/pdf/contrat/contrat_' . $contract->getClient()->getFirstname() .'_' . $contract->getName() . "_" . $contract->getDrivingSchool()->getName();
-            $pdfService->generatePDFFile($html, $nomContrat);
+            $path = $this->getParameter('kernel.project_dir') . '/public/pdf/contrat/';
 
-            $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $contract, $nomContrat . '.pdf', 'Contract');
+            $nomContrat = $path . 'contrat_' . $contract->getClient()->getFirstname() . '_' . $contract->getName() . "_" . $contract->getDrivingSchool()->getName();
+            $pdfService->generatePDFFile($html, $nomContrat, $path);
+
+            $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') . '/assets/images/driving-school.png', $contract, $nomContrat . '.pdf', 'Contract');
 
             return $this->redirectToRoute('app_contract_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -76,7 +102,9 @@ class ContractController extends AbstractController
             'drivingSchool' => $schoolSelected,
         ]);
     }
+
     #[Route('/{id}', name: 'app_contract_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(contract.getDrivingSchool()))')]
     public function show(Request $request, Contract $contract): Response
     {
         $session = $request->getSession();
@@ -89,6 +117,7 @@ class ContractController extends AbstractController
     }
 
     #[Route('/pdf/{id}', name: 'app_contract_pdf_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function showPdf(Request $request, Contract $contract, PdfService $pdfService)
     {
         $session = $request->getSession();
@@ -101,8 +130,9 @@ class ContractController extends AbstractController
 
         $pdfService->showPdfFile($html);
     }
+
     #[Route('/new/{idClient}', name: 'app_contract_new_id_client', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function newClient(Request $request, EntityManagerInterface $entityManager, Client $client, MailerService $mailerService, PdfService $pdfService): Response
     {
 
@@ -137,10 +167,12 @@ class ContractController extends AbstractController
                 'contract' => $contract,
             ]);
 
-            $nomContrat = $this->getParameter('kernel.project_dir') .'/public/pdf/contrat/contrat_' . $contract->getClient()->getFirstname() .'_' . $contract->getName() . "_" . $contract->getDrivingSchool()->getName();
-            $pdfService->generatePDFFile($html, $nomContrat);
+            $path = $this->getParameter('kernel.project_dir') . '/public/pdf/contrat/';
 
-            $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $contract, $nomContrat . '.pdf', 'Contract');
+            $nomContrat = $path . 'contrat_' . $contract->getClient()->getFirstname() . '_' . $contract->getName() . "_" . $contract->getDrivingSchool()->getName();
+            $pdfService->generatePDFFile($html, $nomContrat, $path);
+
+            $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') . '/assets/images/driving-school.png', $contract, $nomContrat . '.pdf', 'Contract');
 
             return $this->redirectToRoute('app_contract_index', [], Response::HTTP_SEE_OTHER);
         }

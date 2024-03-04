@@ -6,6 +6,7 @@ use App\Entity\DrivingSchool;
 use App\Entity\Invoice;
 use App\Entity\Contract;
 use App\Entity\Client;
+use App\Form\InvoiceStatusType;
 use App\Form\InvoiceType;
 use App\Form\SearchType;
 use App\Model\SearchData;
@@ -26,7 +27,7 @@ class InvoiceController extends AbstractController
 {
     #[Route('/', name: 'app_invoice_index', methods: ['GET'])]
     #[Security('is_granted("ROLE_BOSS")')]
-    public function index(InvoiceRepository $invoiceRepository, Request $request): Response
+    public function index(Request $request, InvoiceRepository $invoiceRepository): Response
     {
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
@@ -39,11 +40,11 @@ class InvoiceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $searchData->page = $request->query->getInt('page', 1);
-            $invoices = $invoiceRepository->findByInvoiceNameAndDescription($searchData->q);
+            $invoices = $invoiceRepository->findByInvoiceNameAndDescription($searchData->q, $schoolSelected);
         } elseif ($typePayment) {
-            $invoices = $invoiceRepository->findByTypePayment($typePayment);
+            $invoices = $invoiceRepository->findByTypePayment($typePayment, $schoolSelected);
         } else {
-            $invoices = $invoiceRepository->findAll();
+            $invoices = $invoiceRepository->findByDrivingSchoolId($schoolSelected);
         }
 
         return $this->render('invoice/index.html.twig', [
@@ -52,7 +53,6 @@ class InvoiceController extends AbstractController
             'drivingSchool' => $schoolSelected
         ]);
     }
-
 
     #[Route('/new', name: 'app_invoice_new', methods: ['GET', 'POST'])]
     #[Security('is_granted("ROLE_BOSS")')]
@@ -78,8 +78,10 @@ class InvoiceController extends AbstractController
                 'invoice' => $invoice,
             ]);
 
-            $nomInvoice = $this->getParameter('kernel.project_dir') .'/public/pdf/invoice/invoice_' . $invoice->getClient()->getFirstname() .'_' . $invoice->getName() . "_" . $invoice->getDrivingSchool()->getName();
-            $pdfService->generatePDFFile($html, $nomInvoice);
+            $path = $this->getParameter('kernel.project_dir') .'/public/pdf/invoice/';
+
+            $nomInvoice = $path . 'invoice_' . $invoice->getClient()->getFirstname() .'_' . $invoice->getName() . "_" . $invoice->getDrivingSchool()->getName();
+            $pdfService->generatePDFFile($html, $nomInvoice, $path);
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $invoice, $nomInvoice . '.pdf', 'Invoice');
 
@@ -93,8 +95,31 @@ class InvoiceController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/edit', name: 'app_invoice_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Invoice $invoice): Response
+    {
+        $session = $request->getSession();
+        $schoolSelected = $session->get('driving-school-selected');
+        $drivingSchool = $entityManager->getRepository(DrivingSchool::class)->findOneById($schoolSelected);
+
+        $form = $this->createForm(InvoiceStatusType::class, $invoice, array('drivingSchool' => $drivingSchool));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_invoice_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('invoice/edit.html.twig', [
+            'invoice' => $invoice,
+            'form' => $form,
+            'drivingSchool' => $schoolSelected,
+        ]);
+    }
+
     #[Route('/new', name: 'app_invoice_new_id_client', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(client.getDrivingSchool()))')]
     public function newClient(Request $request, EntityManagerInterface $entityManager, Client $client, MailerService $mailerService, PdfService $pdfService): Response
     {
         $session = $request->getSession();
@@ -117,8 +142,10 @@ class InvoiceController extends AbstractController
                 'invoice' => $invoice,
             ]);
 
-            $nomInvoice = $this->getParameter('kernel.project_dir') .'/public/pdf/invoice/invoice_' . $invoice->getClient()->getFirstname() .'_' . $invoice->getName() . "_" . $invoice->getDrivingSchool()->getName();
-            $pdfService->generatePDFFile($html, $nomInvoice);
+            $path = $this->getParameter('kernel.project_dir') .'/public/pdf/invoice/';
+
+            $nomInvoice = $path . 'invoice_' . $invoice->getClient()->getFirstname() .'_' . $invoice->getName() . "_" . $invoice->getDrivingSchool()->getName();
+            $pdfService->generatePDFFile($html, $nomInvoice, $path);
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $invoice, $nomInvoice . '.pdf', 'Invoice');
 
@@ -134,7 +161,7 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/convert/{id}/client/{clientId}', name: 'app_invoice_convert', methods: ['GET', 'POST'])]
-    #[Security('is_granted("ROLE_BOSS")')]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(contract.getDrivingSchool()))')]
     public function convert(Contract $contract, int $clientId, Request $request, EntityManagerInterface $entityManager, MailerService $mailerService, PdfService $pdfService): Response
     {
         $session = $request->getSession();
@@ -162,8 +189,10 @@ class InvoiceController extends AbstractController
                 'invoice' => $invoice,
             ]);
 
-            $nomInvoice = $this->getParameter('kernel.project_dir') .'/public/pdf/invoice/invoice_' . $invoice->getClient()->getFirstname() .'_' . $invoice->getName() . "_" . $invoice->getDrivingSchool()->getName();
-            $pdfService->generatePDFFile($html, $nomInvoice);
+            $path = $this->getParameter('kernel.project_dir') .'/public/pdf/invoice/';
+
+            $nomInvoice = $path . 'invoice_' . $invoice->getClient()->getFirstname() .'_' . $invoice->getName() . "_" . $invoice->getDrivingSchool()->getName();
+            $pdfService->generatePDFFile($html, $nomInvoice, $path);
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $invoice, $nomInvoice . '.pdf', 'Invoice');
 
@@ -178,6 +207,7 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_invoice_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(invoice.getDrivingSchool()))')]
     public function show(Request $request, Invoice $invoice): Response
     {
         $session = $request->getSession();
@@ -190,6 +220,7 @@ class InvoiceController extends AbstractController
     }
 
     #[Route('/pdf/{id}', name: 'app_invoice_pdf_show', methods: ['GET'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && user.getDrivingSchools().contains(invoice.getDrivingSchool()))')]
     public function showPdf(Request $request, Invoice $invoice, PdfService $pdfService)
     {
         $session = $request->getSession();

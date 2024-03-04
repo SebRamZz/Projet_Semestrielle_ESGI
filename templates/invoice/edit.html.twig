@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Invoice{% endblock %}
+{% block title %}Edit Product{% endblock %}
 
 {% block body %}
-    <h1>Edit Invoice</h1>
+    {{ include('composants/header.html.twig') }}
 
-    {{ include('invoice/_form.html.twig', {'button_label': 'Update'}) }}
+    <section class='dark:bg-dark-mode-secondary ml-64 mt-32 dark:text-primary'>
+        <div class='m-8'>
+            <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Modification facture</h1>
+        </div>
+        {% include('composants/_customForm.html.twig')
+            with {
+            'form': form,
+            'updateAction': 'Mettre à jour',
+            'backAction': 'app_invoice_index'
+        }
+        %}
 
-    <a href="{{ path('app_invoice_index', {'idS': drivingSchool}) }}">back to list</a>
+    </section>
 
-    {{ include('invoice/_delete_form.html.twig') }}
 {% endblock %}

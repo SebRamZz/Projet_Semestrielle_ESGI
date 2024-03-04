@@ -3,11 +3,21 @@
 {% block title %}New Contract{% endblock %}
 
 {% block body %}
-    <h1>Create new Contract</h1>
 
-    {{ include('composants/_adminSideBar.html.twig') }}
+    {{ include('composants/header.html.twig') }}
 
-    {{ include('contract/_form.html.twig') }}
-
-    <a class="ml-64" href="{{ path('app_contract_index') }}">back to list</a>
+    <section class='dark:bg-dark-mode-secondary ml-64 mt-32 dark:text-primary'>
+        {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'client'} %}
+        <div class='m-8'>
+            <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Créer un contrat</h1>
+        </div>
+        {%
+            include('composants/_customForm.html.twig')
+            with {
+            'form': form,
+            'createAction': 'Créer',
+            'backAction': 'app_contract_index'
+        }
+        %}
+    </section>
 {% endblock %}

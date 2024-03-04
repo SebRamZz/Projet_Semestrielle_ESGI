@@ -18,6 +18,7 @@ class DrivingSchoolController extends AbstractController
 {
 
     #[Route('/', name: 'app_driving_school_index', methods: ['GET'])]
+    #[Security('is_granted("ROLE_COMPTABLE")')]
     public function index(DrivingSchoolRepository $drivingSchoolRepository): Response
     {
         if ($this->isGranted("ROLE_ADMIN")) {

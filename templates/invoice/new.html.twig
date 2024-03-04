@@ -3,9 +3,21 @@
 {% block title %}New Invoice{% endblock %}
 
 {% block body %}
-    <h1>Create new Invoice</h1>
 
-    {{ include('invoice/_form.html.twig') }}
+     {{ include('composants/header.html.twig') }}
 
-    <a href="{{ path('app_invoice_index', {'idS': drivingSchool}) }}">back to list</a>
+    <section class='dark:bg-dark-mode-secondary ml-64 mt-32 dark:text-primary'>
+        {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'invoice'} %}
+        <div class='m-8'>
+            <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Créer une facture</h1>
+        </div>
+        {% 
+            include('composants/_customForm.html.twig') 
+            with {
+                'form': form,
+                'createAction': 'Créer',
+                'backAction': 'app_invoice_index'
+            } 
+        %}
+    </section>
 {% endblock %}

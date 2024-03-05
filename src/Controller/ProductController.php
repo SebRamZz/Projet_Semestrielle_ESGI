@@ -57,6 +57,8 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
+            $this->addFlash("success", "Le produit à été créé avec succès");
+
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -93,6 +95,8 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash("success", "Le produit à été modifié avec succès");
+
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -110,6 +114,8 @@ class ProductController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($product);
             $entityManager->flush();
+
+            $this->addFlash("success", "Le produit à été supprimé avec succès");
         }
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);

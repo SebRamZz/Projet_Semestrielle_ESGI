@@ -93,6 +93,8 @@ class ContractController extends AbstractController
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') . '/assets/images/driving-school.png', $contract, $nomContrat . '.pdf', 'Contract');
 
+            $this->addFlash("success", "Le contrat à été créé avec succès");
+
             return $this->redirectToRoute('app_contract_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -172,6 +174,8 @@ class ContractController extends AbstractController
             $pdfService->generatePDFFile($html, $nomContrat, $path);
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') . '/assets/images/driving-school.png', $contract, $nomContrat . '.pdf', 'Contract');
+
+            $this->addFlash("success", "Le contrat à été créé avec succès");
 
             return $this->redirectToRoute('app_contract_index', [], Response::HTTP_SEE_OTHER);
         }

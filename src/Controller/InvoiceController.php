@@ -90,6 +90,8 @@ class InvoiceController extends AbstractController
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $invoice, $nomInvoice . '.pdf', 'Invoice');
 
+            $this->addFlash("success", "La facture à été créée avec succès");
+
             return $this->redirectToRoute('app_invoice_index');
         }
 
@@ -112,6 +114,8 @@ class InvoiceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash("success", "La facture à été modifiée avec succès");
 
             return $this->redirectToRoute('app_invoice_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -153,6 +157,8 @@ class InvoiceController extends AbstractController
             $pdfService->generatePDFFile($html, $nomInvoice, $path);
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $invoice, $nomInvoice . '.pdf', 'Invoice');
+
+            $this->addFlash("success", "La facture à été créée avec succès");
 
             return $this->redirectToRoute('app_invoice_index');
         }
@@ -202,6 +208,8 @@ class InvoiceController extends AbstractController
 
             $mailerService->sendContract($this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') .'/assets/images/driving-school.png', $invoice, $nomInvoice . '.pdf', 'Invoice');
 
+            $this->addFlash("success", "La facture à été créée avec succès");
+
             return $this->redirectToRoute('app_invoice_index');
         }
 
@@ -246,6 +254,8 @@ class InvoiceController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$invoice->getId(), $request->request->get('_token'))) {
             $entityManager->remove($invoice);
             $entityManager->flush();
+
+            $this->addFlash("success", "La facture à été supprimée avec succès");
         }
 
         return $this->redirectToRoute('app_invoice_index', ["idS" => $idS->getId()], Response::HTTP_SEE_OTHER);

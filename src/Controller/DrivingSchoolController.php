@@ -46,6 +46,8 @@ class DrivingSchoolController extends AbstractController
             $entityManager->persist($drivingSchool);
             $entityManager->flush();
 
+            $this->addFlash("success", "L'auto-école à été créée avec succès");
+
             return $this->redirectToRoute('app_driving_school_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,6 +78,8 @@ class DrivingSchoolController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash("success", "L'auto-école à été modifiée avec succès");
+
             return $this->redirectToRoute('app_driving_school_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -92,6 +96,8 @@ class DrivingSchoolController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $drivingSchool->getId(), $request->request->get('_token'))) {
             $entityManager->remove($drivingSchool);
             $entityManager->flush();
+
+            $this->addFlash("success", "L'auto-école à été supprimée avec succès");
         }
 
         return $this->redirectToRoute('app_driving_school_index', [], Response::HTTP_SEE_OTHER);

@@ -73,6 +73,8 @@ class AdminController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $this->addFlash("success", "L'utilisateur à été créé avec succès");
+
             $mailer->sendConfirmationMail($this->emailVerifier, $this->getParameter('address_mailer'), $this->getParameter('kernel.project_dir') . '/assets/images/driving-school.png', $user);
 
         }
@@ -107,6 +109,8 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash("success", "L'utilisateur à été modifié avec succès");
 
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }

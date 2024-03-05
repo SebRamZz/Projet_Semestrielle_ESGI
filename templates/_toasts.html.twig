@@ -1,8 +1,8 @@
 {% for type, messages in app.flashes %}
     {% for message in messages %}
-        <div class="z-10">
+        <div class="z-10 fixed top-2 left-[50%] translate-x-[-50%]">
             {% if type == 'success' %}
-                <div id="liveToast" class="flex absolute top-5 left-1/2 p-2.5 rounded-xl bg-green-500 justify-between" hidden="hidden">
+                <div id="liveToast" class="flex p-2.5 rounded-xl bg-green-500 justify-between" hidden="hidden">
                     <span class="material-symbols-outlined text-white text-3xl">check_circle</span>
             {% endif %}
             {% if type == 'error' %}

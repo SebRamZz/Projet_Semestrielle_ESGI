@@ -1,8 +1,9 @@
-var toast = document.getElementById('liveToast');
+const toast = document.querySelector('#liveToast');
 
 if (toast) {
-    $('#liveToast').show();
+    toast.classList.add('flex')
     setTimeout(function (){
-        $('#liveToast').hide();
+        toast.classList.add('hidden')
+        toast.classList.remove('flex')
     }, 3000);
 }

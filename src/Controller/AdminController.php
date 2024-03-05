@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChooseDateType;
 use App\Form\RegistrationFormType;
+use App\Form\RegistrationUpdateFormType;
 use App\Model\DateData;
 use App\Repository\ClientRepository;
 use App\Repository\ContractRepository;
@@ -81,13 +82,13 @@ class AdminController extends AbstractController
             'drivingSchool' => $schoolSelected,
         ]);
     }
+
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, Request $request): Response
     {
 
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
-
         return $this->render('admin/show.html.twig', [
             'user' => $user,
             'drivingSchool' => $schoolSelected,
@@ -101,13 +102,13 @@ class AdminController extends AbstractController
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationUpdateFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/edit.html.twig', [
@@ -115,6 +116,19 @@ class AdminController extends AbstractController
             'form' => $form,
             'drivingSchool' => $schoolSelected,
         ]);
+    }
+
+
+    #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
+    #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS"))')]
+    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 
 

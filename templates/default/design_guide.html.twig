@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client index
+{% endblock %}
+
+{% block body %}
+
+	{# {% include "composants/_searchData.html.twig" with { form: form} only %} #}
+
+	<section>
+		{{ include('composants/header.html.twig') }}
+		<section class="ml-64 mt-32">
+			 {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'design'} %}
+			<div class='m-6'>
+                <h1>This is the design guide !</h1>
+
+                <div class="mt-4">
+                    {% embed 'composants/_buttonNav.html.twig' with {href: '/design-guide'} %}
+                        {% block p %}Bouton exemple{% endblock %}
+                    {% endembed %}          
+                </div>
+
+                <div class="mt-4">
+                    {% embed 'composants/_buttonValidation.html.twig' %}
+                        {% block p %}Bouton exemple de validation{% endblock %}
+                    {% endembed %}          
+                </div>
+
+                <div class="mt-4">
+                    {% include 'composants/_iconAndText.html.twig' with {nameIcons: 'request_quote', titre: 'Titre exemple pour icon', description: "Description exemple pour icon"} %}
+                </div>
+
+
+                <div class="mt-4">
+                    {% include 'composants/_table.html.twig' with {  'columns': [
+                                ['id', 'ID', true],
+                                ['test', 'Test', true],
+                                ['actions', 'Actions', false] 
+                            ], 
+                            'datas': [{'id': 1, 'test': 'This is my test'}, {'id': 2, 'test': 'This is my test'}, {'id': 2, 'test': 'This is my test'}],
+                            'showAction': ['Voir', 'app_user_show'],
+                            'updateAction': ['Modifier', 'app_user_edit'],
+                            'deleteAction': ['Supprimer', 'app_user_delete']
+                        }
+                    %}
+                </div>
+
+                <div class="mt-4">
+                     {% include 'composants/_showElements.html.twig' with {
+                            'sections': [
+                                [
+                                    "Contrat",
+                                    [{'id': 1, 'name': 'Test name', 'description': 'Description', 'price': '15'}]
+                                ],
+                                [
+                                    "Invoice",
+                                    [{'id': 1, 'name': 'Test name', 'description': 'Description', 'price': '15'}]
+                                ],
+                            ],
+                            'elementsToDisplay': [
+                                [
+                                    ['Numéro de contrat', 'id'],
+                                    ['Nom', 'name'],
+                                    ['Description', 'description'],
+                                    ['Prix', 'price'],
+                                ],
+                                [
+                                    ['Numéro de contrat', 'id'],
+                                    ['Nom', 'name'],
+                                    ['Description', 'description'],
+                                    ['Prix', 'price'],
+                                ],
+                            ]
+                        }
+                    %}
+                </div>
+
+			</div>
+		</section>
+	</section>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\DrivingSchool;
 use App\Entity\User;
 use App\Form\ChooseDateType;
+use App\Form\RegistrationFormAdminType;
 use App\Form\RegistrationFormType;
 use App\Form\RegistrationUpdateFormType;
 use App\Model\DateData;
@@ -58,13 +59,8 @@ class AdminController extends AbstractController
         dump($schoolSelected);
 
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationFormAdminType::class, $user);
         $form->handleRequest($request);
-
-        // Set le role du user par défaut
-        $roles[] = "ROLE_BOSS";
-        $user->setRoles($roles);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($schoolSelected) {

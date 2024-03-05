@@ -8,7 +8,7 @@
         <section class="ml-64 mt-32">
             {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'invoice'} %}
             <div class='m-8'>
-                <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Visualisation facture</h1>
+                <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Visualisation facture</h1>
             </div>
             {% include 'composants/_showElements.html.twig' with {
                 'sections': [
@@ -28,6 +28,17 @@
                     ],
                 ]
             } %}
+            <section class="flex m-8 gap-4 self-end">
+                <div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
+                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">arrow_back</span>
+                    <a class="text-white" href="{{ path('app_invoice_index') }}">Retour à la liste</a>
+                </div>
+
+                <div class="flex gap-4 bg-orange-primary hover:bg-orange-secondary p-2 rounded items-center justify-between">
+                    <a href="{{ path('app_invoice_edit', {'id': invoice.id }) }}" type="submit" class='text-white'>Modifier</a>
+                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white transition duration-75">edit_square</span>
+                </div>
+            </section>
         </section>
     </section>
 {% endblock %}

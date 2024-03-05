@@ -32,9 +32,16 @@ class ClientController extends AbstractController
         $form = $this->createForm(SearchType::class, $searchData);
         $form->handleRequest($request);
 
+        $orderByLastname = $request->query->get('orderASC');
+
         if ($form->isSubmitted() && $form->isValid()) {
             $searchData->page = $request->query->getInt('page', 1);
             $clients = $clientRepository->findByClientNameAndLastName($searchData->q, $schoolSelected);
+        } elseif ($orderByLastname === '1') {
+            $clients = $clientRepository->findLastNameSortedAlphabetically($schoolSelected);
+        }
+        elseif ($orderByLastname === '2') {
+            $clients = $clientRepository->findLastNameSortedAlphabeticallyReverse($schoolSelected);
         } else {
             $clients = $clientRepository->findByDrivingSchool($schoolSelected);
         }

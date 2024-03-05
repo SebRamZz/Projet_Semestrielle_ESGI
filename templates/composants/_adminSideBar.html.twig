@@ -2,7 +2,7 @@
     <div class="h-full px-3 py-4 overflow-y-auto bg-secondary dark:bg-dark-mode-secondary">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="#" class="mb-6 mt-8 flex items-center p-2 text-black dark:text-primary rounded-lg hover:bg-gray-100 group dark:hover:bg-dark-mode-third {% if current_page == 'home' %} active {% endif %}">
+                <a href="{{ path('app_driving_school_index') }}" class="mb-6 mt-8 flex items-center p-2 text-black dark:text-primary rounded-lg hover:bg-gray-100 group dark:hover:bg-dark-mode-third {% if current_page == 'home' %} active {% endif %}">
                     <span class="material-symbols-outlined flex items-center justify-center-0 w-5 h-5 text-gray-500 dark:text-third transition duration-75 group-hover:text-gray-900 dark:group-hover:text-secondary">home</span>
                     <span class="h-6 bg-gray-500 mx-3 w-[2px]"></span>
                     <span class="font-medium text-opacity-60">Mon entreprise</span>
@@ -34,6 +34,14 @@
                     <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-gray-500 dark:text-third transition duration-75 group-hover:text-gray-900 dark:group-hover:text-secondary">shopping_cart</span>
                     <span class="h-6 bg-gray-500 mx-3 w-[2px]"></span>
                     <span class="flex-1 whitespace-nowrap text-opacity-60 {% if current_page == 'product' %} text-red-secondary dark:text-dark-light-purple {% endif %}">Mes Produits </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_comptable_index') }}"
+                   class="mb-6 flex items-center p-2 text-black dark:text-primary rounded-lg hover:bg-gray-100 group dark:hover:bg-dark-mode-third {% if current_page == 'comptable' %}active{% endif %}">
+                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-gray-500 dark:text-third transition duration-75 group-hover:text-gray-900 dark:group-hover:text-secondary">analytics</span>
+                    <span class="h-6 bg-gray-500 mx-3 w-[2px]"></span>
+                    <span class="flex-1 whitespace-nowrap text-opacity-60 {% if current_page == 'comptable' %} text-red-secondary dark:text-dark-light-purple {% endif %}">Espace comptable</span>
                 </a>
             </li>
 

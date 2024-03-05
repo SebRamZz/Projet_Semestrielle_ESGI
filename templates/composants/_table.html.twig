@@ -1,7 +1,7 @@
  <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
     <table class="table-auto w-full">
         <thead>
-            <tr class="text-black dark:text-primary">
+            <tr class="text-black dark:text-primary text-xl text-bold">
                 {% for column in columns %}
                     <th>{{column[1]}}</th>
                 {% endfor %}
@@ -19,6 +19,7 @@
                         {% endif %}
                     {% endif %}
                 {% endfor %}
+                {% if showAction is defined or updateAction is defined or deleteAction is defined  %}
                 <td class='relative w-[50px]'>
                     <div class='flex justify-center pointer cursor-pointer relative mx-[60px]'>
                         <span class="material-symbols-outlined flex pointer justify-center items-center w-4 h-4 text-[19px] text-black dark:text-primary border border-third p-3 rounded action-menu-toggle">more_vert</span>
@@ -33,7 +34,7 @@
                             {% if updateAction is defined %}    
                                 <div class="flex gap-4 items-center justify-between">
                                     <a class='text-orange-primary' href="{{ path(updateAction[1], { 'id': data.id }) }}">{{ updateAction[0] }}</a>
-                                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-[#FF742C] transition duration-75">edit_square</span>
+                                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-orange-primary transition duration-75">edit_square</span>
                                 </div>
                             {% endif %}
                             {% if deleteAction is defined %}
@@ -42,15 +43,29 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ data.id) }} }}">
                                         <button class='text-red-secondary' type="submit">{{ deleteAction[0] }}</button>
                                     </form>
-                                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-[#EA3E2B] transition duration-75">delete</span>
+                                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-red-secondary transition duration-75">delete</span>
+                                </div>
+                            {% endif %}
+                            {% if convertAction is defined %}
+                                <div class="flex gap-4 items-center justify-between">
+                                    <a class='text-sky-primary' href="{{ path(convertAction[1], { 'id': data.id, 'clientId': data.client.id}) }}">{{ convertAction[0] }}</a>
+                                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-sky-primary transition duration-75">cached</span>
+
+                                </div>
+                            {% endif %}
+                            {% if pdfAction is defined %}
+                                <div class="flex gap-4 items-center justify-between">
+                                    <a class='text-red-primary' href="{{ path(pdfAction[1], { 'id': data.id}) }}">{{ pdfAction[0] }}</a>
+                                    <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-red-primary transition duration-75">description</span>
                                 </div>
                             {% endif %}
                         </div>
                     </div>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
-            <td colspan="6">no records found</td>
+            <td class="text-xl text-five dark:text-third" colspan="">Pas de résultat</td>
         {% endfor %}
         </tbody>
     </table>

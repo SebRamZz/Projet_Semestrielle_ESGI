@@ -69,4 +69,27 @@ class ClientRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function findLastNameSortedAlphabetically($drivingSchool): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.drivingSchool = :drivingSchool')
+            ->orderBy('p.lastname', 'ASC') // Tri par nom de produit en ordre ascendant
+            ->setParameter('drivingSchool', $drivingSchool)
+            ->getQuery()
+            ->getResult();
+
+    }
+
+    public function findLastNameSortedAlphabeticallyReverse($drivingSchool): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.drivingSchool = :drivingSchool')
+            ->orderBy('p.lastname', 'DESC') // Tri par nom de produit en ordre ascendant
+            ->setParameter('drivingSchool', $drivingSchool)
+            ->getQuery()
+            ->getResult();
+
+    }
+
 }

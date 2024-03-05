@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DrivingSchool;
 use App\Entity\User;
 use App\Form\ChooseDateType;
 use App\Form\RegistrationFormType;
@@ -21,6 +22,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -33,25 +35,27 @@ class AdminController extends AbstractController
     {
         $this->emailVerifier = $emailVerifier;
     }
-
+    #[IsGranted("ROLE_BOSS")]
     #[Route('/', name: 'app_admin_index')]
     public function index(Request $request, UserRepository $userRepository): Response
     {
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
-
+        dump($userRepository->findByDrivingSchool($schoolSelected));
         return $this->render('admin/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $userRepository->findByDrivingSchool($schoolSelected),
             'drivingSchool' => $schoolSelected,
         ]);
     }
 
-
+    #[IsGranted("ROLE_BOSS")]
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerService $mailer): Response
     {
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
+
+        dump($schoolSelected);
 
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -61,7 +65,15 @@ class AdminController extends AbstractController
         $roles[] = "ROLE_BOSS";
         $user->setRoles($roles);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($schoolSelected) {
+                $drivingSchool = $entityManager->getRepository(DrivingSchool::class)->find($schoolSelected);
+
+                if ($drivingSchool) {
+                    $user->addDrivingSchool($drivingSchool);
+                }
+            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -82,7 +94,7 @@ class AdminController extends AbstractController
             'drivingSchool' => $schoolSelected,
         ]);
     }
-
+    #[IsGranted("ROLE_BOSS")]
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, Request $request): Response
     {
@@ -94,7 +106,7 @@ class AdminController extends AbstractController
             'drivingSchool' => $schoolSelected,
         ]);
     }
-
+    #[IsGranted("ROLE_BOSS")]
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
@@ -118,7 +130,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-
+    #[IsGranted("ROLE_BOSS")]
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS"))')]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
@@ -131,7 +143,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
+    #[IsGranted("ROLE_BOSS")]
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {

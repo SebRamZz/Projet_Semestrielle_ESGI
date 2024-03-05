@@ -32,12 +32,12 @@ class ComptableController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $date->page = $request->query->getInt('page', 1);
 
-            $invoicesPrices = $invoiceRepository->findTotalPriceOfInvoicesCreatedAfterDate($date->date);
-            $invoices = $invoiceRepository->findInvoicesCreatedAfterDate($date->date);
-            $productDetails = $invoiceRepository->countProductsInInvoicesAfterDate($date->date);
+            $invoicesPrices = $invoiceRepository->findTotalPriceOfInvoicesCreatedAfterDate($date->date, $schoolSelected);
+            $invoices = $invoiceRepository->findInvoicesCreatedAfterDate($date->date, $schoolSelected);
+            $productDetails = $invoiceRepository->countProductsInInvoicesAfterDate($date->date, $schoolSelected);
 
-            $contracts = $contractRepository->findContractsCreatedAfterDate($date->date);
-            $contractsPrices = $contractRepository->findTotalPriceOfContractsCreatedAfterDate($date->date);
+            $contracts = $contractRepository->findContractsCreatedAfterDate($date->date, $schoolSelected);
+            $contractsPrices = $contractRepository->findTotalPriceOfContractsCreatedAfterDate($date->date, $schoolSelected);
 
             $clients = $clientRepository->findClientCreatedAfterDate($date->date);
 

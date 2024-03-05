@@ -5,13 +5,13 @@
 {% block body %}
 
 
-  {{ include('composants/header.html.twig') }}
-     <section class="ml-64 mt-32">
+    {{ include('composants/header.html.twig') }}
+    <section class="ml-64 mt-32">
         {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'product'} %}
 
-       <section class=' dark:text-primary'>
+        <section class=' dark:text-primary'>
             <div class='m-8'>
-                <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Modification produit</h1>
+                <h1 class="text-7xl text-black dark:text-third pb-8 font-light">Modification produit</h1>
             </div>
             {% include('composants/_customForm.html.twig')
                 with {

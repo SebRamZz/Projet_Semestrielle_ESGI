@@ -9,13 +9,13 @@
         <section class="ml-64 mt-32">
             {% include 'composants/_adminSideBar.html.twig'  with {'current_page': 'comptable'} %}
             <div class='m-8'>
-                <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Statistique de l'auto-école</h1>
+                <h1 class="text-7xl text-black dark:text-third pb-8 font-light">Statistique de l'auto-école</h1>
             </div>
             <div class="m-8">
                 {% include "composants/_imputDate.html.twig" with { form: form, placeholder: 'Choissisez une date'} only %}
             </div>
             <div class='m-8'>
-                <h1 class="text-5xl text-five dark:text-third pb-8 font-light">Facture ({{ invoicesCount }})</h1>
+                <h1 class="text-5xl text-black dark:text-third pb-8 font-light">Facture ({{ invoicesCount }})</h1>
                 <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
                     <table class="table-auto w-full">
                         <thead>
@@ -38,10 +38,10 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td class="text-xl text-five dark:text-third" colspan="7">Pas de résultat</td>
+                                <td class="text-xl text-black dark:text-third" colspan="7">Pas de résultat</td>
                             </tr>
                         {% endfor %}
-                        <p class="text-2xl text-five dark:text-third pb-8 ps-8 font-light">Prix total gagné par l'auto école {{ invoicesPrices }}€</p>
+                        <p class="text-2xl text-black dark:text-third pb-8 ps-8 font-light">Prix total gagné par l'auto école {{ invoicesPrices }}€</p>
                         </tbody>
                     </table>
                 </div>
@@ -50,7 +50,7 @@
 
         <section class="ml-64 mt-32">
             <div class='m-8'>
-                <h1 class="text-5xl text-five dark:text-third pb-8 font-light">Contrat ({{ contractsCount }})</h1>
+                <h1 class="text-5xl text-black dark:text-third pb-8 font-light">Contrat ({{ contractsCount }})</h1>
                 <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
                     <table class="table-auto w-full">
                         <thead>
@@ -71,10 +71,10 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td class="text-xl text-five dark:text-third" colspan="7">Pas de résultat</td>
+                                <td class="text-xl text-black dark:text-third" colspan="7">Pas de résultat</td>
                             </tr>
                         {% endfor %}
-                        <p class="text-2xl text-five dark:text-third pb-8 ps-8 font-light">Prix total de tout les contrats de l'auto école {{ contractsPrices }}€</p>
+                        <p class="text-2xl text-black dark:text-third pb-8 ps-8 font-light">Prix total de tout les contrats de l'auto école {{ contractsPrices }}€</p>
                         </tbody>
                     </table>
                 </div>
@@ -83,7 +83,7 @@
 
         <section class="ml-64 mt-32">
             <div class='m-8'>
-                <h1 class="text-5xl text-five dark:text-third pb-8 font-light">Produit ({{ productCount }})</h1>
+                <h1 class="text-5xl text-black dark:text-third pb-8 font-light">Produit ({{ productCount }})</h1>
                 <div class="bg-primary dark:bg-dark-mode-secondary w-full mt-6 rounded-lg pt-4 pb-24 overflow-hidden">
                     <table class="table-auto w-full">
                         <thead>
@@ -113,7 +113,7 @@
                             {% endif %}
                         {% else %}
                             <tr>
-                                <td class="text-xl text-five dark:text-third" colspan="7">Pas de résultat</td>
+                                <td class="text-xl text-black dark:text-third" colspan="7">Pas de résultat</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -121,9 +121,5 @@
                 </div>
             </div>
         </section>
-
     </section>
-
-
-
 {% endblock %}

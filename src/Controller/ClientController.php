@@ -25,7 +25,6 @@ class ClientController extends AbstractController
     #[Security('is_granted("ROLE_BOSS")')]
     public function index(ClientRepository $clientRepository, Request $request): Response
     {
-
         $session = $request->getSession();
         $schoolSelected = $session->get('driving-school-selected');
         $searchData = new SearchData();

@@ -180,7 +180,7 @@ class InvoiceController extends AbstractController
         $invoice->setDescription($contract->getDescription());
         $invoice->setPrice($contract->getPrice());
         $invoice->setDrivingSchool($drivingSchool);
-        $invoice->setStatut('En attente');
+        $invoice->setStatus('En attente');
         $invoice->setClient($client);
 
         $form = $this->createForm(InvoiceType::class, $invoice, ["drivingSchool" => $drivingSchool]);

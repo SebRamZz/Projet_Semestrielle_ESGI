@@ -62,9 +62,8 @@ class DrivingSchoolController extends AbstractController
         $session = $request->getSession();
         $session->set('driving-school-selected', $drivingSchool->getId());
 
-        return $this->render('driving_school/show.html.twig', [
-            'drivingSchool' => $drivingSchool->getId(),
-        ]);
+
+        return $this->redirectToRoute('app_client_index');
     }
 
     #[Security('is_granted("ROLE_ADMIN") or (is_granted("ROLE_BOSS") && drivingSchool.getUsers().contains(user))')]

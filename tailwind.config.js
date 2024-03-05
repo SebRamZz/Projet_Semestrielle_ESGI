@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         'red-primary': '#EA3E2B',
         'red-secondary' : '#ff0000',
+        'red-error': '#ef4444',
 
         'blue-primary': '#2e1065',
         'blue-secondary': '#4c1d95',

@@ -5,7 +5,9 @@
                     <div class="w-[45%] flex-col flex mb-4">
                         {{ form_label(field, null) }}
                         {{ form_widget(field, {'attr': {'class': 'dark:bg-dark-mode-third border border-[#B9B9B9] dark:border-dark-mode-five border-solid px-2 py-1 rounded'}}) }}
-                        {{ form_errors(field) }}
+                        <div class="text-red-error">
+                            {{ form_errors(field)}}
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}

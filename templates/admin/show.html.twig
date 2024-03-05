@@ -1,30 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contract{% endblock %}
+{% block title %}Vos employés{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ user.id }}</td>
-        </tr>
-        <tr>
-            <th>firstname</th>
-            <td>{{ user.firstname }}</td>
-        </tr>
-        <tr>
-            <th>lastname</th>
-            <td>{{ user.firstname }}</td>
-        </tr>
-        <tr>
-            <th>email</th>
-            <td>{{ user.email }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <section>
 
-    <a href="{{ path('app_admin_index')}}">back to list</a>
+        {{ include('composants/header.html.twig') }}
+        <section class="ml-64 mt-32">
+            {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'admin'} %}
+            <div class='m-8'>
+                <h1 class="text-6xl text-five dark:text-third pb-8 font-light">Vos employés</h1>
+            </div>
+            {% include 'composants/_showElements.html.twig' with {
+                'sections': [
+                    [
+                        "Information de l'utilisateur",
+                        user
+                    ]
+                ],
+                'elementsToDisplay': [
+                    [
+                        ['Prénom', 'firstname'],
+                        ['Nom', 'lastname'],
+                        ['Mail', 'email']
+                    ]
+                ]
+            } %}
+
+        </section>
+    </section>
 {% endblock %}

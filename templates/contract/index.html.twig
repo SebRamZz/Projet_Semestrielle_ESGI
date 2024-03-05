@@ -4,49 +4,49 @@
 
 {% block body %}
 
-<section class="dark:bg-dark-mode-primary">
-    {{ include('composants/header.html.twig') }}
-    <section class="ml-64 mt-32">
-        {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'contract'} %}
-        <div class='m-6'>
-        <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Contrat</h1>
+    <section class="dark:bg-dark-mode-primary">
+        {{ include('composants/header.html.twig') }}
+        <section class="ml-64 mt-32">
+            {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'contract'} %}
+            <div class='m-6'>
+                <h1 class="text-7xl text-black dark:text-third pb-8 font-light">Contrat</h1>
 
-            <div class='flex items-center justify-between'>
-                <div class='text-white flex '>
-                    <a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index') }}">Tout</a>
-                    <a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index', {'contractFiltredLess': '700'}) }}"> Inférieur 700 € </a>
-                    <a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index', {'contractFiltredGreater': '700'}) }}"> Supérieur 700 € </a>
-                </div>
-                <div class='flex items-center gap-6'>
-                    <div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
-                        <div class='flex items-center rounded'>
-                            {% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Rechercher par nom, description' } only %}
+                <div class='flex items-center justify-between'>
+                    <div class='text-white flex '>
+                        <a class='bg-orange-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index') }}">Tout</a>
+                        <a class='bg-orange-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index', {'contractFiltredLess': '700'}) }}"> Inférieur 700 € </a>
+                        <a class='bg-orange-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_contract_index', {'contractFiltredGreater': '700'}) }}"> Supérieur 700 € </a>
+                    </div>
+                    <div class='flex items-center gap-6'>
+                        <div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
+                            <div class='flex items-center rounded'>
+                                {% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Rechercher par nom, description' } only %}
+                            </div>
+                        </div>
+
+                        <div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
+                            <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">add</span>
+                            <a class='text-white mr-2' href="{{ path('app_contract_new') }}">Créer nouveau</a>
                         </div>
                     </div>
-
-                    <div class='flex gap-2 bg-blue-primary hover:bg-blue-secondary rounded p-2 pointer'>
-                        <span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-white">add</span>
-                        <a class='text-white mr-2' href="{{ path('app_contract_new') }}">Créer nouveau</a>
-                    </div>
                 </div>
-            </div>
 
-            {% include 'composants/_table.html.twig' with {'columns': [
+                {% include 'composants/_table.html.twig' with {'columns': [
                     ['name', 'Nom', true],
                     ['description', 'Description', true],
                     ['price', 'Prix', true],
                     ['validityDate', 'Date de validité', true],
                     ['actions', 'Actions', false]
                 ],
-                'datas': contracts,
+                    'datas': contracts,
                     'showAction': ['Voir', 'app_contract_show'],
                     'convertAction': ['Convertir', 'app_invoice_convert'],
                     'pdfAction': ['PDF', 'app_contract_pdf_show']
                 }
-            %}
+                %}
 
-        </div>
+            </div>
+        </section>
     </section>
-</section>
 
 {% endblock %}

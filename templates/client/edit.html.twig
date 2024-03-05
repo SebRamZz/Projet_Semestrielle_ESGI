@@ -5,14 +5,14 @@
 {% block body %}
     <section class='dark:bg-dark-mode-secondary ml-64 mt-32 dark:text-primary'>
         <div class='m-8'>
-            <h1 class="text-7xl text-five dark:text-third pb-8 font-light">Modification client</h1>
+            <h1 class="text-7xl text-black dark:text-third pb-8 font-light">Modification client</h1>
         </div>
-     {% include('composants/_customForm.html.twig')
-        with {
+        {% include('composants/_customForm.html.twig')
+            with {
             'form': form,
             'updateAction': 'Mettre à jour',
             'backAction': 'app_client_index'
-        } 
-    %}
+        }
+        %}
     </section>
 {% endblock %}

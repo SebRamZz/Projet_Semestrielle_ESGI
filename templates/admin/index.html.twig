@@ -5,14 +5,13 @@
 
 {% block body %}
 
-	{# {% include "composants/_searchData.html.twig" with { form: form} only %} #}
 
 	<section>
 		{{ include('composants/header.html.twig') }}
 		<section class="ml-64 mt-32">
-			 {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'admin'} %}
+			{% include 'composants/_adminSideBar.html.twig' with {'current_page': 'admin'} %}
 			<div class='m-6'>
-				<h1 class="text-6xl text-five dark:text-third pb-8 font-light">Vos salariés</h1>
+				<h1 class="text-6xl text-black dark:text-third pb-8 font-light">Vos salariés</h1>
 				<div class='flex items-center justify-between'>
 					<div class='flex items-center gap-6'>
 						<div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
@@ -29,16 +28,16 @@
 				</div>
 
 				{% include 'composants/_table.html.twig' with {'columns': [
-						['firstname', 'Prénom', true],
-                        ['lastname', 'Nom', true],
-                        ['email', 'Mail', true],
-						['actions', 'Actions', false] 
-					], 
+					['firstname', 'Prénom', true],
+					['lastname', 'Nom', true],
+					['email', 'Mail', true],
+					['actions', 'Actions', false]
+				],
 					'datas': users,
 					'showAction': ['Voir', 'app_user_show'],
 					'updateAction': ['Modifier', 'app_user_edit'],
-                	'deleteAction': ['Supprimer', 'app_user_delete']
-					}
+					'deleteAction': ['Supprimer', 'app_user_delete']
+				}
 				%}
 
 			</div>

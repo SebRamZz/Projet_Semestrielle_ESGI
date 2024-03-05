@@ -6,18 +6,18 @@
 	<section>
 		{{ include('composants/header.html.twig') }}
 		<section class="ml-64 mt-32">
-			 {% include 'composants/_adminSideBar.html.twig' with {'current_page': 'client'} %}
+			{% include 'composants/_adminSideBar.html.twig' with {'current_page': 'client'} %}
 			<div class='m-6'>
-				<h1 class="text-7xl text-five dark:text-third pb-8 font-light">Client</h1>
+				<h1 class="text-7xl text-black dark:text-third pb-8 font-light">Client</h1>
 				<div class='flex items-center justify-between'>
 					<div class='text-white flex'>
-						<a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index') }}">Pas de filtre</a>
-						<a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index', {'orderASC': '1'}) }}"> A à Z </a>
-						<a class='bg-red-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index', {'orderASC': '2'}) }}"> Z à A </a>
+						<a class='bg-orange-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tl rounded-bl hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index') }}">Pas de filtre</a>
+						<a class='bg-orange-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index', {'orderASC': '1'}) }}"> A à Z </a>
+						<a class='bg-orange-primary px-6 py-2 dark:bg-dark-dark-purple border border-black dark:border-primary rounded-tr rounded-br hover:bg-opacity-80 transition ease-in-out duration-100' href="{{ path('app_client_index', {'orderASC': '2'}) }}"> Z à A </a>
 					</div>
 					<div class='flex items-center gap-6'>
 
-						<div class='flex items-center bg-red-primary dark:bg-dark-dark-purple rounded'>
+						<div class='flex items-center bg-orange-primary dark:bg-dark-dark-purple rounded'>
 							<div class='flex items-center rounded'>
 								{% include "composants/_searchData.html.twig" with { form: form, placeholder: 'Chercher par nom, prénom' } only %}
 							</div>
@@ -31,17 +31,17 @@
 				</div>
 
 				{% include 'composants/_table.html.twig' with {'columns': [
-						['firstname', 'Prénom', true],
-						['lastname', 'Nom', true],
-						['email', 'Email', true], 
-						['phoneNumber', 'Téléphone', true],
-						['actions', 'Actions', false] 
-					], 
+					['firstname', 'Prénom', true],
+					['lastname', 'Nom', true],
+					['email', 'Email', true],
+					['phoneNumber', 'Téléphone', true],
+					['actions', 'Actions', false]
+				],
 					'datas': clients,
 					'showAction': ['Voir', 'app_client_show'],
 					'updateAction': ['Modifier', 'app_client_edit'],
-                	'deleteAction': ['Supprimer', 'app_client_delete']
-					}
+					'deleteAction': ['Supprimer', 'app_client_delete']
+				}
 				%}
 			</div>
 		</section>

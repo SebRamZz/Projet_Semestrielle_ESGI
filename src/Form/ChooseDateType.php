@@ -25,7 +25,6 @@ class ChooseDateType extends AbstractType
                     '6mois' => DateTime::createFromInterface($now->modify('-3 month')),
                     '1ans' => DateTime::createFromInterface($now->modify('-6 month')),
                 ],
-                'empty_data' => '',
                 'multiple' => false,
                 'required' => false
             ]);

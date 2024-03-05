@@ -61,21 +61,25 @@ class InvoiceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findInvoicesCreatedAfterDate(\DateTimeInterface $date): array
+    public function findInvoicesCreatedAfterDate(\DateTimeInterface $date, $drivingSchool): array
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.date >= :date')
+            ->andWhere('i.drivingSchool = :drivingSchool')
             ->setParameter('date', $date)
+            ->setParameter('drivingSchool', $drivingSchool)
             ->getQuery()
             ->getResult();
     }
 
-    public function findTotalPriceOfInvoicesCreatedAfterDate(\DateTimeInterface $date): float
+    public function findTotalPriceOfInvoicesCreatedAfterDate(\DateTimeInterface $date, $drivingSchool): float
     {
         $result = $this->createQueryBuilder('i')
             ->select('SUM(i.price) as total_price')
             ->andWhere('i.date >= :date')
+            ->andWhere('i.drivingSchool = :drivingSchool')
             ->setParameter('date', $date)
+            ->setParameter('drivingSchool', $drivingSchool)
             ->getQuery()
             ->getSingleScalarResult();
 
@@ -103,12 +107,14 @@ class InvoiceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function countProductsInInvoicesAfterDate(\DateTimeInterface $date): array
+    public function countProductsInInvoicesAfterDate(\DateTimeInterface $date, $drivingSchool): array
     {
         $qb = $this->createQueryBuilder('i')
             ->select('i.name AS productName, MAX(i.description) AS productDescription, MAX(i.price) AS productPrice, COUNT(i.id) AS productCount')
             ->where('i.date >= :date')
+            ->andWhere('i.drivingSchool = :drivingSchool')
             ->setParameter('date', $date)
+            ->setParameter('drivingSchool', $drivingSchool)
             ->groupBy('i.name')
             ->orderBy('productCount', 'DESC');
 
